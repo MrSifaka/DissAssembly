@@ -33,6 +33,11 @@
 		"Pver3"
 	],
 
+	"Sifakas": [
+		"Avahi1",
+		"Avahi2",
+		"Avahi3"
+	],
 
 "lemur_fastq_prefixes": [
 		"ANAL10_111_082_S9_L004_R1_001",
