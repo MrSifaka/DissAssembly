@@ -1,43 +1,61 @@
 {
-	"genome_paths": {
-		"Pcoq_1_0_genomic": "path/Pcoq_1_0_genomic.fna"
+"fasta_address": {
+		"pcoq": "ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/956/105/GCF_000956105.1_Pcoq_1.0/GCF_000956105.1_Pcoq_1.0_genomic.fna.gz",
+	},
+
+"annotation_address": {
+		"pcoq": "ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/956/105/GCF_000956105.1_Pcoq_1.0/GCF_000956105.1_Pcoq_1.0_genomic.gff.gz"
+	},
+
+"to_merge": {
+	"Pcoq1-Marcella": ["SRR1657028", "SRR1657029"],
+	"Pcoq5-Cornelia": ["SRR1575526", "SRR1575545"],
+	"Pcoq6-Octavia": ["SRR1575527", "SRR1575528"],
+	"Pcoq2-Trajan": ["SRR1575543", "SRR1575544"],
+	"Pcoq3-Hadrian": ["SRR1575541", "SRR1575542"],
+	"Pcoq4-Flavia": ["SRR1575539", "SRR1575540"],
+	"Pdia1-Romeo": ["SRR1575532", "SRR1575531"],
+	"Pdia2-Titania": ["SRR1575534", "SRR1575533"],
+	"Ptat1-Agrippa": ["SRR1575538", "SRR1575537"],
+	"Ptat2-Cicero": ["SRR1575536", "SRR1575535"],
+	"Pver1-Smoke": ["SRR1575530", "SRR1575529"],
 },
 
-	"Sifakas": [
-		"Pedw1",
-		"Pedw2",
-		"Pedw3",
-		"Pdia1",
-		"Pdia2",
-		"Pdia3",
-		"Pcan1",
-		"Pcan2",
-		"Pcan3",
-		"Pper1",
-		"Pper2",
-		"Pper3",
-		"Ptat1",
-		"Ptat2",
-		"Ptat3",
-		"Pcoq1",
-		"Pcoq2",
-		"Pcoq3",
-		"Pcor1",
-		"Pcor2",
-		"Pcor3",
-		"Pdec1",
-		"Pdec2",
-		"Pdec3",
-		"Pver1",
-		"Pver2",
-		"Pver3"
-	],
+"Sifakas": [
+	"Pedw1",
+	"Pedw2",
+	"Pedw3",
+	"Pdia1",
+	"Pdia2",
+	"Pdia3",
+	"Pcan1",
+	"Pcan2",
+	"Pcan3",
+	"Pper1",
+	"Pper2",
+	"Pper3",
+	"Ptat1",
+	"Ptat2",
+	"Ptat3",
+	"Pcoq1",
+	"Pcoq2",
+	"Pcoq3",
+	"Pcor1",
+	"Pcor2",
+	"Pcor3",
+	"Pdec1",
+	"Pdec2",
+	"Pdec3",
+	"Pver1",
+	"Pver2",
+	"Pver3"
+],
 
-	"Woollies": [
-		"Avahi1",
-		"Avahi2",
-		"Avahi3"
-	],
+"Woollies": [
+	"Avahi1",
+	"Avahi2",
+	"Avahi3"
+],
 
 "lemur_fastq_prefixes": [
 		"ANAL10_111_082_S9_L004_R1_001",
@@ -334,5 +352,181 @@
 		"LB": "",
 		"PU": "",
 		"PL": ""
-	}
+	},
+
+	"SRR1657028": {
+		"ID": "SRR1657028",
+		"SM": "Pcoq1-Marcella",
+		"LB": "Pcoq1-Marcella",
+		"PU": "SRR1657028",
+		"PL": "Illumina"
+	},
+
+	"SRR1657029": {
+		"ID": "SRR1657029",
+		"SM": "Pcoq1-Marcella",
+		"LB": "Pcoq1-Marcella",
+		"PU": "SRR1657029",
+		"PL": "Illumina"
+	},
+
+	"SRR1575526": {
+		"ID": "SRR1575526",
+		"SM": "Pcoq5-Cornelia",
+		"LB": "Pcoq5-Cornelia",
+		"PU": "SRR1575526",
+		"PL": "Illumina"
+	},
+
+	"SRR1575545": {
+		"ID": "SRR1575545",
+		"SM": "Pcoq5-Cornelia",
+		"LB": "Pcoq5-Cornelia",
+		"PU": "SRR1575545",
+		"PL": "Illumina"
+	},
+
+	"SRR1575527": {
+		"ID": "SRR1575527",
+		"SM": "Pcoq6-Octavia",
+		"LB": "Pcoq6-Octavia",
+		"PU": "SRR1575527",
+		"PL": "Illumina"
+	},
+
+	"SRR1575528": {
+		"ID": "SRR1575528",
+		"SM": "Pcoq6-Octavia",
+		"LB": "Pcoq6-Octavia",
+		"PU": "SRR1575528",
+		"PL": "Illumina"
+	},
+
+	"SRR1575543": {
+		"ID": "SRR1575543",
+		"SM": "Pcoq2-Trajan",
+		"LB": "Pcoq2-Trajan",
+		"PU": "SRR1575543",
+		"PL": "Illumina"
+	},
+
+	"SRR1575544": {
+		"ID": "SRR1575544",
+		"SM": "Pcoq2-Trajan",
+		"LB": "Pcoq2-Trajan",
+		"PU": "SRR1575544",
+		"PL": "Illumina"
+	},
+
+	"SRR1575541": {
+		"ID": "SRR1575541",
+		"SM": "Pcoq3-Hadrian",
+		"LB": "Pcoq3-Hadrian",
+		"PU": "SRR1575541",
+		"PL": "Illumina"
+	},
+
+	"SRR1575542": {
+		"ID": "SRR1575542",
+		"SM": "Pcoq3-Hadrian",
+		"LB": "Pcoq3-Hadrian",
+		"PU": "SRR1575542",
+		"PL": "Illumina"
+	},
+
+	"SRR1575539": {
+		"ID": "SRR1575539",
+		"SM": "Pcoq4-Flavia",
+		"LB": "Pcoq4-Flavia",
+		"PU": "SRR1575539",
+		"PL": "Illumina"
+	},
+
+	"SRR1575540": {
+		"ID": "SRR1575540",
+		"SM": "Pcoq4-Flavia",
+		"LB": "Pcoq4-Flavia",
+		"PU": "SRR1575540",
+		"PL": "Illumina"
+	},
+
+	"SRR1575532": {
+		"ID": "SRR1575532",
+		"SM": "Pdia1-Romeo",
+		"LB": "Pdia1-Romeo",
+		"PU": "SRR1575532",
+		"PL": "Illumina"
+	},
+
+	"SRR1575531": {
+		"ID": "SRR1575531",
+		"SM": "Pdia1-Romeo",
+		"LB": "Pdia1-Romeo",
+		"PU": "SRR1575531",
+		"PL": "Illumina"
+	},
+
+	"SRR1575534": {
+		"ID": "SRR1575534",
+		"SM": "Pdia2-Titania",
+		"LB": "Pdia2-Titania",
+		"PU": "SRR1575534",
+		"PL": "Illumina"
+	},
+
+	"SRR1575533": {
+		"ID": "SRR1575533",
+		"SM": "Pdia2-Titania",
+		"LB": "Pdia2-Titania",
+		"PU": "SRR1575533",
+		"PL": "Illumina"
+	},
+
+	"SRR1575538": {
+		"ID": "SRR1575538",
+		"SM": "Ptat1-Agrippa",
+		"LB": "Ptat1-Agrippa",
+		"PU": "SRR1575538",
+		"PL": "Illumina"
+	},
+
+	"SRR1575537": {
+		"ID": "SRR1575537",
+		"SM": "Ptat1-Agrippa",
+		"LB": "Ptat1-Agrippa",
+		"PU": "SRR1575537",
+		"PL": "Illumina"
+	},
+
+	"SRR1575536": {
+		"ID": "SRR1575536",
+		"SM": "Ptat2-Cicero",
+		"LB": "Ptat2-Cicero",
+		"PU": "SRR1575536",
+		"PL": "Illumina"
+	},
+
+	"SRR1575535": {
+		"ID": "SRR1575535",
+		"SM": "Ptat2-Cicero",
+		"LB": "Ptat2-Cicero",
+		"PU": "SRR1575535",
+		"PL": "Illumina"
+	},
+
+	"SRR1575530": {
+		"ID": "SRR1575530",
+		"SM": "Pver1-Smoke",
+		"LB": "Pver1-Smoke",
+		"PU": "SRR1575530",
+		"PL": "Illumina"
+	},
+
+	"SRR1575529": {
+		"ID": "SRR1575529",
+		"SM": "Pver1-Smoke",
+		"LB": "Pver1-Smoke",
+		"PU": "SRR1575529",
+		"PL": "Illumina"
+		}
 }

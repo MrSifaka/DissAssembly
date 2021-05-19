@@ -1,0 +1,627 @@
+import os
+
+configfile: "Diss_Assembly.json"
+
+# Shared paths
+adapter_path = "misc/adapter_sequence.fa"
+temp_directory = "temp/"
+fastq_directory = "/scratch/general/lustre/u6035429/Diss-fastq"
+
+# Runtime values
+very_short = "6:00:00"
+medium = "12:00:00"
+day = "24:00:00"
+long = "48:00:00"
+very_long = "72:00:00"
+
+# Parameters for splitting reference
+num_chunks = 25
+chunk_range = [x for x in range(1, num_chunks + 1)]
+
+# Tool paths
+bbduk_path = "bbduk.sh"
+bcftools_path = "bcftools"
+bedtools_path = "bedtools"
+bgzip_path = "bgzip"
+bwa_path = "bwa"
+fastq_dump_path = "fastq-dump"
+fastqc_path = "fastqc"
+gatk_path = "gatk"
+gff2bed_path = "gff2bed"
+mosdepth_path = "mosdepth"
+multiqc_path = "multiqc"
+picard_path = "picard"
+prefetch_path = "prefetch"
+rename_sh_path = "rename.sh"
+samtools_path = "samtools"
+tabix_path = "tabix"
+blast_path = "blastn"
+vcflib_path = "vcflib"
+vcftools_path = "vcftools"
+
+# Samples and genomes
+mapping_genomes = ["pcoq"]
+
+sra_ids = [
+	"SRR1657028", "SRR1657029", "SRR1575526", "SRR1575545", "SRR1575527",
+	"SRR1575528", "SRR1575543", "SRR1575544", "SRR1575541", "SRR1575542", "SRR1575539",
+	"SRR1575540", "SRR1575532", "SRR1575531", "SRR1575534", "SRR1575533", "SRR1575538",
+	"SRR1575537", "SRR1575536", "SRR1575535", "SRR1575530", "SRR1575529"]
+
+new_samples = []
+
+processed_sample_list = new_samples + [
+	"Pcoq1-Marcella", "Pcoq5-Cornelia", "Pcoq6-Octavia", "Pcoq2-Trajan", "Pcoq3-Hadrian",
+	"Pcoq4-Flavia", "Pdia1-Romeo", "Pdia2-Titania", "Ptat1-Agrippa", "Ptat2-Cicero",
+	"Pver1-Smoke"]
+
+
+# Filter parameters
+filter_depths = ["10"]
+filter_mapqs = ["40"]
+
+rule all:
+	input:
+		"multiqc/multiqc_report.html",
+		"multiqc_trimmed/multiqc_report.html",
+		expand(
+			"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
+			sample=processed_sample_list, genome=mapping_genomes),
+		expand(
+			"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats",
+			genome=mapping_genomes, mq=filter_mapqs, dp=filter_depths),
+		expand(
+			"mosdepth_results/{sample}.{genome}.per-base.dp{dp}.merged.bed",
+			sample=processed_sample_list, genome=mapping_genomes, dp=filter_depths),
+
+rule get_annotation:
+	output:
+		"reference_genomes/{genome}.gff"
+	params:
+		web_address = lambda wildcards: config["annotation_address"][wildcards.genome],
+		initial_output = "reference_genomes/{genome}.gff.gz",
+		threads = 1,
+		mem = 4,
+		t = day
+	run:
+		shell("wget {params.web_address} -O {params.initial_output}")
+		shell("gunzip {params.initial_output}")
+
+rule extract_cds_from_gff:
+	input:
+		"reference_genomes/{genome}.gff"
+	output:
+		"regions/{genome}.cds.gff"
+	params:
+		threads = 1,
+		mem = 4,
+		t = very_short
+	shell:
+		"""awk '($3 == "CDS")' {input} > {output}"""
+
+rule gff2bed:
+	input:
+		"regions/{genome}.cds.gff"
+	output:
+		"regions/{genome}.cds.merged.bed"
+	params:
+		gff2bed = gff2bed_path,
+		bedtools = bedtools_path,
+		threads = 2,
+		mem = 8,
+		t = medium
+	shell:
+		"cat {input} | {params.gff2bed} | {params.bedtools} merge > {output}"
+
+rule get_fasta:
+	output:
+		"reference_genomes/{genome}.fa"
+	params:
+		web_address = lambda wildcards: config["fasta_address"][wildcards.genome],
+		initial_output = "reference_genomes/{genome}.fa.gz",
+		threads = 1,
+		mem = 4,
+		t = very_short
+	run:
+		shell("wget {params.web_address} -O {params.initial_output}")
+		shell("gunzip {params.initial_output}")
+
+rule prepare_reference_fai:
+	input:
+		ref = "reference_genomes/{genome}.fa"
+	output:
+		fai = "reference_genomes/{genome}.fa.fai",
+	params:
+		samtools = samtools_path,
+		threads = 4,
+		mem = 16,
+		t = medium
+	shell:
+		"{params.samtools} faidx {input.ref}"
+
+rule prepare_reference_dict:
+	input:
+		ref = "reference_genomes/{genome}.fa"
+	output:
+		dict = "reference_genomes/{genome}.dict"
+	params:
+		samtools = samtools_path,
+		threads = 4,
+		mem = 16,
+		t = medium
+	shell:
+		"{params.samtools} dict -o {output.dict} {input.ref}"
+
+rule bwa_indexing:
+	input:
+		ref = "reference_genomes/{genome}.fa"
+	output:
+		amb = "reference_genomes/{genome}.fa.amb"
+	params:
+		bwa = bwa_path,
+		threads = 4,
+		mem = 16,
+		t = medium
+	shell:
+		"{params.bwa} index {input.ref}"
+
+rule chunk_reference:
+	input:
+		fai = "reference_genomes/{genome}.fa.fai"
+	output:
+		expand(
+			"reference_genomes/{{genome}}_split_chunk{num}.bed",
+			num=chunk_range)
+	params:
+		chunks = num_chunks,
+		out_prefix = "reference_genomes/{genome}_split",
+		threads = 2,
+		mem = 8,
+		t = medium
+	shell:
+		"python scripts/Chunk_fai.py --fai {input.fai} "
+		"--out_prefix {params.out_prefix} --chunks {params.chunks}"
+
+rule prefetch_sra:
+	output:
+		os.path.join(temp_directory, "{id}/{id}.sra")
+	params:
+		tool = prefetch_path,
+		tmp_dir = temp_directory,
+		use_id = "{id}",
+		threads = 1,
+		mem = 4,
+		t = day
+	shell:
+		"{params.tool} {params.use_id} -O {params.tmp_dir} --max-size 100GB"
+
+rule fastq_dump_paired:
+	input:
+		sra = os.path.join(temp_directory, "{sample}/{sample}.sra")
+	output:
+		fq1 = "paired_fastqs/{sample}_1.fastq.gz",
+		fq2 = "paired_fastqs/{sample}_2.fastq.gz"
+	params:
+		output_dir = "paired_fastqs",
+		fastq_dump = fastq_dump_path,
+		threads = 1,
+		mem = 4,
+		t = day
+	shell:
+		"{params.fastq_dump} --outdir {params.output_dir} --gzip --readids --split-files {input.sra}"
+
+rule fix_read_IDs_for_paired_fastqs_from_SRA_paired:
+	# The fastq-dump created issues with read ID names for paired files so that
+	# they give bwa issues.  This rule will go through and rename them so that
+	# they're compatible with bwa
+	input:
+		fq1 = "paired_fastqs/{sample}_1.fastq.gz",
+		fq2 = "paired_fastqs/{sample}_2.fastq.gz"
+	output:
+		out1 = "renamed_fastqs/{sample}_fixed_1.fastq.gz",
+		out2 = "renamed_fastqs/{sample}_fixed_2.fastq.gz"
+	params:
+		rename_sh = rename_sh_path,
+		read_name = "{sample}",
+		threads = 1,
+		mem = 4,
+		t = day
+	shell:
+		"{params.rename_sh} in={input.fq1} in2={input.fq2} out={output.out1} out2={output.out2} prefix={params.read_name}"
+
+rule consolidate_fastqs:
+	input:
+		sra1 = expand(
+			"renamed_fastqs/{sample}_fixed_1.fastq.gz",
+			sample=sra_ids),
+		sra2 = expand(
+			"renamed_fastqs/{sample}_fixed_2.fastq.gz",
+			sample=sra_ids),
+		new1 = expand(
+			os.path.join(fastq_directory, "{sample}_read1.fastq.gz"), sample=new_samples),
+		new2 = expand(
+			os.path.join(fastq_directory, "{sample}_read2.fastq.gz"), sample=new_samples)
+	output:
+		expand(
+			"fastqs_consolidated/{sample}_{read}.fastq.gz",
+			sample=initial_sample_list,
+			read=["read1", "read2"])
+	params:
+		threads = 1,
+		mem = 4,
+		t = very_short
+	run:
+		for i in input.sra1:
+			original = i
+			basename = i.split("/")[-1].split("_")[0]
+			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
+			shell(
+				"ln -sr {original} {new_name} && touch -h {new_name}")
+		for i in input.sra2:
+			original = i
+			basename = i.split("/")[-1].split("_")[0]
+			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
+			shell(
+				"ln -sr {original} {new_name} && touch -h {new_name}")
+		for i in input.new1:
+			original = i
+			basename = i.split("/")[-1].split("_")[0]
+			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
+			shell(
+				"ln -sr {original} {new_name} && touch -h {new_name}")
+		for i in input.new2:
+			original = i
+			basename = i.split("/")[-1].split("_")[0]
+			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
+			shell(
+				"ln -sr {original} {new_name} && touch -h {new_name}")
+
+rule fastqc_analysis:
+	input:
+		fq1 = "fastqs_consolidated/{sample}_read1.fastq.gz",
+		fq2 = "fastqs_consolidated/{sample}_read2.fastq.gz"
+	output:
+		fq1 = "fastqc/{sample}_read1_fastqc.html",
+		fq2 = "fastqc/{sample}_read2_fastqc.html"
+	params:
+		fastqc = fastqc_path,
+		threads = 1,
+		mem = 4,
+		t = very_short
+	shell:
+		"{params.fastqc} -o fastqc {input.fq1} {input.fq2}"
+
+rule multiqc_analysis_dna:
+	input:
+		expand(
+			"fastqc/{sample}_{read}_fastqc.html",
+			sample=initial_sample_list,
+			read=["read1", "read2"])
+	output:
+		"multiqc/multiqc_report.html"
+	params:
+		multiqc = multiqc_path,
+		threads = 1,
+		mem = 4,
+		t = very_short
+	shell:
+		"export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8 && "
+		"{params.multiqc} --interactive -f -o multiqc fastqc"
+
+rule trim_adapters_paired_bbduk_dna:
+	input:
+		fq1 = "fastqs_consolidated/{sample}_read1.fastq.gz",
+		fq2 = "fastqs_consolidated/{sample}_read2.fastq.gz"
+	output:
+		out_fq1 = "trimmed_fastqs/{sample}_trimmed_read1.fastq.gz",
+		out_fq2 = "trimmed_fastqs/{sample}_trimmed_read2.fastq.gz"
+	params:
+		adapter = adapter_path,
+		bbduk = bbduk_path,
+		threads = 2,
+		mem = 8,
+		t = very_short
+	shell:
+		"{params.bbduk} -Xmx3g in1={input.fq1} in2={input.fq2} out1={output.out_fq1} out2={output.out_fq2} ref={params.adapter} ktrim=r k=21 mink=11 hdist=2 tbo tpe qtrim=rl trimq=10"
+
+rule fastqc_analysis_trimmed:
+	input:
+		fq1 = "trimmed_fastqs/{sample}_trimmed_read1.fastq.gz",
+		fq2 = "trimmed_fastqs/{sample}_trimmed_read2.fastq.gz"
+	output:
+		html1 = "fastqc_trimmed/{sample}_trimmed_read1_fastqc.html",
+		html2 = "fastqc_trimmed/{sample}_trimmed_read2_fastqc.html"
+	params:
+		fastqc = fastqc_path,
+		threads = 1,
+		mem = 4,
+		t = very_short
+	shell:
+		"{params.fastqc} -o fastqc_trimmed {input.fq1} {input.fq2}"
+
+rule multiqc_analysis_trimmed_dna:
+	input:
+		expand(
+			"fastqc_trimmed/{sample}_trimmed_{reads}_fastqc.html",
+			sample=initial_sample_list, reads=["read1", "read2"])
+	output:
+		"multiqc_trimmed/multiqc_report.html"
+	params:
+		threads = 1,
+		mem = 4,
+		t = very_short
+	shell:
+		"export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8 && "
+		"multiqc --interactive -f -o multiqc_trimmed fastqc_trimmed"
+
+# Process BAM files
+
+rule map_and_process_trimmed_reads:
+	input:
+		fq1 = "trimmed_fastqs/{sample}_trimmed_read1.fastq.gz",
+		fq2 = "trimmed_fastqs/{sample}_trimmed_read2.fastq.gz",
+		ref = "reference_genomes/{genome}.fa",
+		fai = "reference_genomes/{genome}.fa.fai",
+		amb = "reference_genomes/{genome}.fa.amb",
+		dict = "reference_genomes/{genome}.dict"
+	output:
+		"processed_bams/{sample}.{genome}.sorted.bam"
+	params:
+		id = lambda wildcards: config[wildcards.sample]["ID"],
+		sm = lambda wildcards: config[wildcards.sample]["SM"],
+		lb = lambda wildcards: config[wildcards.sample]["LB"],
+		pu = lambda wildcards: config[wildcards.sample]["PU"],
+		pl = lambda wildcards: config[wildcards.sample]["PL"],
+		bwa = bwa_path,
+		samtools = samtools_path,
+		threads = 4,
+		mem = 16,
+		t = very_long
+	threads: 4
+	shell:
+		"{params.bwa} mem -t {params.threads} -R "
+		"'@RG\\tID:{params.id}\\tSM:{params.sm}\\tLB:{params.lb}\\tPU:{params.pu}\\tPL:{params.pl}' "
+		"{input.ref} {input.fq1} {input.fq2}"
+		"| {params.samtools} fixmate -O bam - - | {params.samtools} sort "
+		"-O bam -o {output}"
+
+rule index_bam:
+	input:
+		"processed_bams/{sample}.{genome}.sorted.bam"
+	output:
+		"processed_bams/{sample}.{genome}.sorted.bam.bai"
+	params:
+		samtools = samtools_path,
+		threads = 4,
+		mem = 16,
+		t = very_short
+	shell:
+		"{params.samtools} index {input}"
+
+rule merge_bams:
+	input:
+		bams = lambda wildcards: expand(
+			"processed_bams/{sample}.{genome}.sorted.bam",
+			sample=config["to_merge"][wildcards.sample], genome=wildcards.genome),
+		bais = lambda wildcards: expand(
+			"processed_bams/{sample}.{genome}.sorted.bam.bai",
+			sample=config["to_merge"][wildcards.sample], genome=wildcards.genome)
+	output:
+		"processed_bams/{sample}.{genome}.sorted.merged.bam"
+	params:
+		samtools = samtools_path,
+		threads = 4,
+		mem = 16,
+		t = long
+	shell:
+		"""
+		input_bams=({input.bams})
+		merged_output={output}
+		if [ "${{#input_bams[@]}}" -gt "1" ]; then
+			{params.samtools} merge {output} {input.bams}
+		else
+			ln -s ../${{input_bams[0]}} $merged_output && touch -h $merged_output
+		fi
+		"""
+
+rule index_merged_bam:
+	input:
+		"processed_bams/{sample}.{genome}.sorted.merged.bam"
+	output:
+		"processed_bams/{sample}.{genome}.sorted.merged.bam.bai"
+	params:
+		samtools = samtools_path,
+		threads = 4,
+		mem = 16,
+		t = very_short
+	shell:
+		"{params.samtools} index {input}"
+
+rule picard_mkdups:
+	input:
+		bam = "processed_bams/{sample}.{genome}.sorted.merged.bam",
+		bai = "processed_bams/{sample}.{genome}.sorted.merged.bam.bai"
+	output:
+		bam = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam",
+		metrics = "metrics/{sample}.{genome}.picard_mkdup_metrics.txt"
+	params:
+		picard = picard_path,
+		temp_dir = temp_directory,
+		threads = 8,
+		mem = 24,
+		t = long,
+	shell:
+		"{params.picard} -Xmx14g -Djava.io.tmpdir={params.temp_dir} MarkDuplicates I={input.bam} O={output.bam} "
+		"M={output.metrics}"
+
+rule index_mkdup_bam:
+	input:
+		"processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam"
+	output:
+		"processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam.bai"
+	params:
+		samtools = samtools_path,
+		threads = 4,
+		mem = 16,
+		t = very_short
+	conda:
+		"envs/samtools_bwa_env.yaml"
+	shell:
+		"{params.samtools} index {input}"
+
+rule bam_stats:
+	input:
+		bam = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam",
+		bai = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam.bai"
+	output:
+		"stats/{sample}.{genome}.sorted.mkdup.bam.stats"
+	params:
+		samtools = samtools_path,
+		threads = 4,
+		mem = 16,
+		t = very_short
+	conda:
+		"envs/samtools_bwa_env.yaml"
+	shell:
+		"{params.samtools} stats {input.bam} | grep ^SN | cut -f 2- > {output}"
+
+# Call and filter variants
+rule gatk_gvcf_per_chunk:
+	input:
+		ref = "reference_genomes/{genome}.fa",
+		dict = "reference_genomes/{genome}.dict",
+		bam = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam",
+		bai = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam.bai",
+		chunkfile = "reference_genomes/{genome}_split_chunk{chunk}.bed"
+	output:
+		"gvcf/{sample}.{genome}.{chunk}.g.vcf.gz"
+	params:
+		temp_dir = temp_directory,
+		gatk = gatk_path,
+		threads = 4,
+		mem = 16,
+		t = very_long
+	shell:
+		"""{params.gatk} --java-options "-Xmx15g -Djava.io.tmpdir={params.temp_dir}" """
+		"""HaplotypeCaller -R {input.ref} -I {input.bam} -L {input.chunkfile} """
+		"""-ERC GVCF --do-not-run-physical-phasing -O {output}"""
+
+rule genomicsdbimport_combine_gvcfs_per_chunk:
+	input:
+		ref = "reference_genomes/{genome}.fa",
+		gvcfs = lambda wildcards: expand(
+			"gvcf/{sample}.{genome}.{chunk}.g.vcf.gz",
+			sample=processed_sample_list,
+			genome=[wildcards.genome],
+			chunk=[wildcards.chunk]),
+		chunkfile = "reference_genomes/{genome}_split_chunk{chunk}.bed"
+	output:
+		directory("gvcf_databases/{genome}-{chunk}")
+	params:
+		temp_dir = temp_directory,
+		gatk = gatk_path,
+		threads = 4,
+		mem = 16,
+		t = very_long
+	run:
+		variant_files = []
+		for i in input.gvcfs:
+			variant_files.append("--variant " + i)
+		variant_files = " ".join(variant_files)
+		shell(
+			"""{params.gatk} --java-options "-Xmx15g -Djava.io.tmpdir={params.temp_dir}" """
+			"""GenomicsDBImport -R {input.ref} {variant_files} """
+			"""--genomicsdb-workspace-path {output} -L {input.chunkfile}""")
+
+rule gatk_genotypegvcf_genomicsdb:
+	input:
+		gvcf = "gvcf_databases/{genome}-{chunk}",
+		ref = "reference_genomes/{genome}.fa"
+	output:
+		"vcf_genotyped/{genome}.{chunk}.gatk.called.raw.vcf.gz"
+	params:
+		temp_dir = temp_directory,
+		gatk = gatk_path,
+		threads = 8,
+		mem = 32,
+		t = very_long
+	shell:
+		"""{params.gatk} --java-options "-Xmx30g -Djava.io.tmpdir={params.temp_dir}" """
+		"""GenotypeGVCFs -R {input.ref} -V gendb://{input.gvcf} -O {output}"""
+
+rule filter_vcfs:
+	input:
+		"combined_vcfs/combined.{genome}.raw.vcf.gz"
+	output:
+		"vcf_filtered/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.gz"
+	params:
+		bgzip = bgzip_path,
+		bcftools = bcftools_path,
+		mapq = "{mq}",
+		dp = "{dp}",
+		threads = 4,
+		mem = 16,
+		t = long
+	shell:
+		"{params.bcftools} filter -i "
+		"'QUAL >= 30 && MQ >= {params.mapq} && QD > 2' {input} | "
+		"{params.bcftools} filter -i 'FMT/DP >= {params.dp} & FMT/GQ >= 30' -S . - | "
+		"{params.bgzip} > {output}"
+
+rule index_filtered_vcf:
+	input:
+		"vcf_filtered/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.gz"
+	output:
+		"vcf_filtered/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.gz.tbi"
+	params:
+		tabix = tabix_path,
+		threads = 4,
+		mem = 16,
+		t = very_short
+	shell:
+		"{params.tabix} -p vcf {input}"
+
+rule vcf_stats:
+	input:
+		vcf = "vcf_filtered/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.gz",
+		tbi = "vcf_filtered/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.gz.tbi"
+	output:
+		"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats"
+	params:
+		bcftools = bcftools_path,
+		threads = 4,
+		mem = 16,
+		t = very_short
+	shell:
+		"{params.bcftools} stats {input.vcf} | grep ^SN > {output}"
+
+rule mosdepth_depth:
+	input:
+		bam = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam",
+		bai = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam.bai",
+		bed = "regions/{genome}.cds.merged.bed"
+	output:
+		dist = "mosdepth_results/{sample}.{genome}.mosdepth.global.dist.txt",
+		per_base = "mosdepth_results/{sample}.{genome}.per-base.bed.gz"
+	params:
+		mosdepth = mosdepth_path,
+		prefix = "mosdepth_results/{sample}.{genome}",
+		threads = 4,
+		mem = 16,
+		t = long
+	shell:
+		"{params.mosdepth} --by {input.bed} {params.prefix} {input.bam}"
+
+rule filter_mosdepth:
+	input:
+		"mosdepth_results/{sample}.{genome}.per-base.bed.gz"
+	output:
+		"mosdepth_results/{sample}.{genome}.per-base.dp{dp}.merged.bed"
+	params:
+		dp = "{dp}",
+		bedtools = bedtools_path,
+		threads = 4,
+		mem = 16,
+		t = very_short
+	shell:
+		"zcat {input} | awk '$4 >= {params.dp}' | {params.bedtools} merge -i - > {output}"
