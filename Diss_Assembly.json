@@ -19,67 +19,11 @@
 	"Ptat1-Agrippa": ["SRR1575538", "SRR1575537"],
 	"Ptat2-Cicero": ["SRR1575536", "SRR1575535"],
 	"Pver1-Smoke": ["SRR1575530", "SRR1575529"],
+	"Pver1-Smoke": ["SRR1575530", "SRR1575529"],
 },
 
 
-"fastq_prefixes": [
-		"ANAL10_111_082_S9_L004_R1_001",
-		"ANAL10_111_082_S9_L004_R2_001",
-		"DAR4-11_182_011_S11_L003_R1_001"
-		"DAR4-11_182_011_S11_L003_R2_001",
-		"DAR4-39_170_023_S12_L004_R1_001",
-		"DAR4-39_170_023_S12_L004_R2_001",
-		"DAR4-5_099_094_S10_L002_R1_001",
-		"DAR4-5_099_094_S10_L002_R2_001",
-		"DASI5-08_192_001_S27_L004_R1_001",
-		"DASI5-08_192_001_S27_L004_R2_001",
-		"DASI5-16_109_084_S25_L002_R1_001",
-		"DASI5-16_109_084_S25_L002_R2_001",
-		"DASI5-21_097_096_S26_L003_R1_001",
-		"DASI5-21_097_096_S26_L003_R2_001",
-		"JAM4-16_146_047_S14_L003_R1_001",
-		"JAM4-16_146_047_S14_L003_R2_001",
-		"JAM4-20_134_059_S15_L004_R1_001",
-		"JAM4-20_134_059_S15_L004_R2_001",
-		"JAM4-7_158_035_S13_L002_R1_001",
-		"JAM4-7_158_035_S13_L002_R2_001",
-		"JEJ01_112_081_S1_L002_R1_001",
-		"JEJ01_112_081_S1_L002_R2_001",
-		"JEJ3-11_183_010_S3_L004_R1_001",
-		"JEJ3-11_183_010_S3_L004_R2_001",
-		"KIBO15_122_071_S16_L002_R1_001",
-		"KIBO15_122_071_S16_L002_R2_001",
-		"KIBO36_098_095_S18_L004_R1_001",
-		"KIBO36_098_095_S18_L004_R2_001",
-		"KIBO44_110_083_S17_L003_R1_001",
-		"KIBO44_110_083_S17_L003_R2_001",
-		"KMTEA7-10_157_036_S21_L004_R1_001",
-		"KMTEA7-10_157_036_S21_L004_R2_001",
-		"KMTEA7-2_181_012_S19_L002_R1_001",
-		"KMTEA7-2_181_012_S19_L002_R2_001",
-		"KMTEA7-4_169_024_S20_L003_R1_001",
-		"KMTEA7-4_169_024_S20_L003_R2_001",
-		"MERY3_100_093_S2_L003_R1_001",
-		"MERY3_100_093_S2_L003_R2_001",
-		"RANO330_147_046_S6_L004_R1_001",
-		"RANO330_147_046_S6_L004_R2_001",
-		"RANO332_171_022_S4_L002_R1_001",
-		"RANO332_171_022_S4_L002_R2_001",
-		"RANO54_159_034_S5_L003_R1_001",
-		"RANO54_159_034_S5_L003_R2_001",
-		"TOBI5-1_135_058_S7_L002_R1_001",
-		"TOBI5-1_135_058_S7_L002_R2_001",
-		"TOBI5-3_123_070_S8_L003_R1_001",
-		"TOBI5-3_123_070_S8_L003_R2_001",
-		"TSINJ32_145_048_S22_L002_R1_001",
-		"TSINJ32_145_048_S22_L002_R2_001",
-		"TSINJ38_133_060_S23_L003_R1_001",
-		"TSINJ38_133_060_S23_L003_R2_001",
-		"TSINJ47_121_072_S24_L004_R1_001",
-		"TSINJ47_121_072_S24_L004_R2_001"
-],
-
-	"RANO330_147_046_S6_L004": {
+	"RANO330-OMH_Pedw1": {
 		"ID": "RANO330",
 		"SM": "OMH_Pedw1",
 		"LB": "OMH_Pedw1",
@@ -87,7 +31,7 @@
 		"PL": "Illumina"
 	},
 
-	"RANO332_171_022_S4_L002": {
+	"RANO332-OMH_Pedw2": {
 		"ID": "RANO332",
 		"SM": "OMH_Pedw2",
 		"LB": "OMH_Pedw2",
@@ -95,7 +39,7 @@
 		"PL": "Illumina"
 	},
 
-	"RANO54_159_034_S5_L003": {
+	"RANO54-OMH_Pedw3": {
 		"ID": "RANO54",
 		"SM": "OMH_Pedw3",
 		"LB": "OMH_Pedw3",
@@ -103,7 +47,7 @@
 		"PL": "Illumina"
 	},
 
-	"TSINJ32_145_048_S22_L002": {
+	"TSINJ32-OMH_Pdia1": {
 		"ID": "TSINJ32",
 		"SM": "OMH_Pdia1",
 		"LB": "OMH_Pdia1",
@@ -111,7 +55,7 @@
 		"PL": "Illumina"
 	},
 
-	"TSINJ38_133_060_S23_L003": {
+	"TSINJ38-OMH_Pdia2": {
 		"ID": "TSINJ38",
 		"SM": "OMH_Pdia2",
 		"LB": "OMH_Pdia2",
@@ -119,7 +63,7 @@
 		"PL": "Illumina"
 	},
 
-	"TSINJ47_121_072_S24_L004": {
+	"TSINJ47-OMH_Pdia3": {
 		"ID": "TSINJ47",
 		"SM": "OMH_Pdia3",
 		"LB": "OMH_Pdia3",
@@ -127,7 +71,7 @@
 		"PL": "Illumina"
 	},
 
-	"JEJ01_112_081_S1_L002": {
+	"JEJ01-OMH_Pcan1": {
 		"ID": "JEJ01",
 		"SM": "OMH_Pcan1",
 		"LB": "OMH_Pcan1",
@@ -135,7 +79,7 @@
 		"PL": "Illumina"
 	},
 
-	"JEJ3-11_183_010_S3_L004": {
+	"JEJ3-11-OMH_Pcan2": {
 		"ID": "JEJ3",
 		"SM": "OMH_Pcan2",
 		"LB": "OMH_Pcan2",
@@ -143,7 +87,7 @@
 		"PL": "Illumina"
 	},
 
-	"MERY3_100_093_S2_L003": {
+	"MERY3-OMH_Pcan3": {
 		"ID": "MERY3",
 		"SM": "OMH_Pcan3",
 		"LB": "OMH_Pcan3",
@@ -151,7 +95,7 @@
 		"PL": "Illumina"
 	},
 
-	"ANAL10_111_082_S9_L004": {
+	"ANAL10-OMH_Pper1": {
 		"ID": "ANAL10",
 		"SM": "OMH_Pper1",
 		"LB": "OMH_Pper1",
@@ -159,7 +103,7 @@
 		"PL": "Illumina"
 	},
 
-	"TOBI5-1_135_058_S7_L002": {
+	"TOBI5-1-OMH_Pper2": {
 		"ID": "TOBI5-1",
 		"SM": "OMH_Pper2",
 		"LB": "OMH_Pper2",
@@ -167,7 +111,7 @@
 		"PL": "Illumina"
 	},
 
-	"TOBI5-3_123_070_S8_L003": {
+	"TOBI5-3-OMH_Pper3": {
 		"ID": "TOBI5-3",
 		"SM": "OMH_Pper3",
 		"LB": "OMH_Pper3",
@@ -175,15 +119,15 @@
 		"PL": "Illumina"
 	},
 
-	"DAR4-11_182_011_S11_L003": {
-		"ID": "DAR4.11",
+	"DAR4-11-OMH_Ptat1": {
+		"ID": "DAR4-11",
 		"SM": "OMH_Ptat1",
 		"LB": "OMH_Ptat1",
 		"PU": "HYWWFDSXY.3",
 		"PL": "Illumina"
 	},
 
-	"DAR4-39_170_023_S12_L004": {
+	"DAR4-39-OMH_Ptat2": {
 		"ID": "DAR4-39",
 		"SM": "OMH_Ptat2",
 		"LB": "OMH_Ptat2",
@@ -191,7 +135,7 @@
 		"PL": "Illumina"
 	},
 
-	"DAR4-5_099_094_S10_L002": {
+	"DAR4-5-OMH_Ptat3": {
 		"ID": "DAR4-5",
 		"SM": "OMH_Ptat3",
 		"LB": "OMH_Ptat3",
@@ -199,7 +143,7 @@
 		"PL": "Illumina"
 	},
 
-	"JAM4-16_146_047_S14_L003": {
+	"JAM4-16-OMH_Pcor1": {
 		"ID": "JAM4-16",
 		"SM": "OMH_Pcor1",
 		"LB": "OMH_Pcor1",
@@ -207,7 +151,7 @@
 		"PL": "Illumina"
 	},
 
-	"JAM4-20_134_059_S15_L004": {
+	"JAM4-20-OMH_Pcor2": {
 		"ID": "JAM4-20",
 		"SM": "OMH_Pcor2",
 		"LB": "OMH_Pcor2",
@@ -215,7 +159,7 @@
 		"PL": "Illumina"
 	},
 
-	"JAM4-7_158_035_S13_L002": {
+	"JAM4-7-OMH_Pcor3": {
 		"ID": "JAM4-7",
 		"SM": "OMH_Pcor3",
 		"LB": "OMH_Pcor3",
@@ -223,7 +167,7 @@
 		"PL": "Illumina"
 	},
 
-	"KIBO15_122_071_S16_L002": {
+	"KIBO15-OMH_Pdec1": {
 		"ID": "KIBO15",
 		"SM": "OMH_Pdec1",
 		"LB": "OMH_Pdec1",
@@ -231,7 +175,7 @@
 		"PL": "Illumina"
 	},
 
-	"KIBO36_098_095_S18_L004": {
+	"KIBO36-OMH_Pdec2": {
 		"ID": "KIBO36",
 		"SM": "OMH_Pdec2",
 		"LB": "OMH_Pdec2",
@@ -239,7 +183,7 @@
 		"PL": "Illumina"
 	},
 
-	"KIBO44_110_083_S17_L003": {
+	"KIBO44-OMH_Pdec3": {
 		"ID": "KIBO44",
 		"SM": "OMH_Pdec3",
 		"LB": "OMH_Pdec3",
@@ -247,7 +191,7 @@
 		"PL": "Illumina"
 	},
 
-	"KMTEA7-10_157_036_S21_L004": {
+	"KMTEA7-10-OMH_Pver1": {
 		"ID": "KMTEA7-10",
 		"SM": "OMH_Pver1",
 		"LB": "OMH_Pver1",
@@ -255,7 +199,7 @@
 		"PL": "Illumina"
 	},
 
-	"KMTEA7-2_181_012_S19_L002": {
+	"KMTEA7-2-OMH_Pver2": {
 		"ID": "KMTEA7-2",
 		"SM": "OMH_Pver2",
 		"LB": "OMH_Pver2",
@@ -263,7 +207,7 @@
 		"PL": "Illumina"
 	},
 
-	"KMTEA7-4_169_024_S20_L003": {
+	"KMTEA7-4-OMH_Pver3": {
 		"ID": "KMTEA7-4",
 		"SM": "OMH_Pver3",
 		"LB": "OMH_Pver3",
@@ -271,7 +215,7 @@
 		"PL": "Illumina"
 	},
 
-	"DASI5-08_192_001_S27_L004": {
+	"DASI5-08-OMH_Alang1": {
 		"ID": "DASI5-08",
 		"SM": "OMH_Alang1",
 		"LB": "OMH_Alang1",
@@ -279,7 +223,7 @@
 		"PL": "Illumina"
 	},
 
-	"DASI5-16_109_084_S25_L002": {
+	"DASI5-16-OMH_Alang2": {
 		"ID": "DASI5-16",
 		"SM": "OMH_Alang2",
 		"LB": "OMH_Alang2",
@@ -287,7 +231,7 @@
 		"PL": "Illumina"
 	},
 
-	"DASI5-21_097_096_S26_L003": {
+	"DASI5-21-OMH_Alang3": {
 		"ID": "DASI5-21",
 		"SM": "OMH_Alang3",
 		"LB": "OMH_Alang3",

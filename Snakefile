@@ -48,7 +48,14 @@ sra_ids = [
 	"SRR1575540", "SRR1575532", "SRR1575531", "SRR1575534", "SRR1575533", "SRR1575538",
 	"SRR1575537", "SRR1575536", "SRR1575535", "SRR1575530", "SRR1575529"]
 
-new_samples = []
+new_samples = [
+	"RANO330-OMH_Pedw1", "RANO332-OMH_Pedw2", "RANO54-OMH_Pedw3", "TSINJ32-OMH_Pdia1",
+	"TSINJ38-OMH_Pdia2", "TSINJ47-OMH_Pdia3", "JEJ01-OMH_Pcan1", "JEJ3-11-OMH_Pcan2",
+	"MERY3-OMH_Pcan3", "ANAL10-OMH_Pper1", "TOBI5-1-OMH_Pper2", "TOBI5-3-OMH_Pper3",
+	"DAR4-11-OMH_Ptat1", "DAR4-39-OMH_Ptat2", "DAR4-5-OMH_Ptat3", "JAM4-16-OMH_Pcor1",
+	"JAM4-20-OMH_Pcor2", "JAM4-7-OMH_Pcor3", "KIBO15-OMH_Pdec1", "KIBO36-OMH_Pdec2",
+	"KIBO44-OMH_Pdec3", "KMTEA7-10-OMH_Pver1", "KMTEA7-2-OMH_Pver2", "KMTEA7-4-OMH_Pver3",
+	"DASI5-08-OMH_Alang1", "DASI5-16-OMH_Alang2", "DASI5-21-OMH_Alang3"]
 
 processed_sample_list = new_samples + [
 	"Pcoq1-Marcella", "Pcoq5-Cornelia", "Pcoq6-Octavia", "Pcoq2-Trajan", "Pcoq3-Hadrian",
