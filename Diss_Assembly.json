@@ -21,43 +21,8 @@
 	"Pver1-Smoke": ["SRR1575530", "SRR1575529"],
 },
 
-"Sifakas": [
-	"Pedw1",
-	"Pedw2",
-	"Pedw3",
-	"Pdia1",
-	"Pdia2",
-	"Pdia3",
-	"Pcan1",
-	"Pcan2",
-	"Pcan3",
-	"Pper1",
-	"Pper2",
-	"Pper3",
-	"Ptat1",
-	"Ptat2",
-	"Ptat3",
-	"Pcoq1",
-	"Pcoq2",
-	"Pcoq3",
-	"Pcor1",
-	"Pcor2",
-	"Pcor3",
-	"Pdec1",
-	"Pdec2",
-	"Pdec3",
-	"Pver1",
-	"Pver2",
-	"Pver3"
-],
 
-"Woollies": [
-	"Avahi1",
-	"Avahi2",
-	"Avahi3"
-],
-
-"lemur_fastq_prefixes": [
+"fastq_prefixes": [
 		"ANAL10_111_082_S9_L004_R1_001",
 		"ANAL10_111_082_S9_L004_R2_001",
 		"DAR4-11_182_011_S11_L003_R1_001"
@@ -114,244 +79,220 @@
 		"TSINJ47_121_072_S24_L004_R2_001"
 ],
 
-	"Pedw1": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"RANO330_147_046_S6_L004": {
+		"ID": "RANO330",
+		"SM": "OMH_Pedw1",
+		"LB": "OMH_Pedw1",
+		"PU": "HYWWFDSXY.4",
+		"PL": "Illumina"
 	},
 
-	"Pedw2": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"RANO332_171_022_S4_L002": {
+		"ID": "RANO332",
+		"SM": "OMH_Pedw2",
+		"LB": "OMH_Pedw2",
+		"PU": "HYWWFDSXY.2",
+		"PL": "Illumina"
 	},
 
-	"Pedw3": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"RANO54_159_034_S5_L003": {
+		"ID": "RANO54",
+		"SM": "OMH_Pedw3",
+		"LB": "OMH_Pedw3",
+		"PU": "HYWWFDSXY.3",
+		"PL": "Illumina"
 	},
 
-	"Pdia1": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"TSINJ32_145_048_S22_L002": {
+		"ID": "TSINJ32",
+		"SM": "OMH_Pdia1",
+		"LB": "OMH_Pdia1",
+		"PU": "HYWWFDSXY.2",
+		"PL": "Illumina"
 	},
 
-	"Pdia2": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"TSINJ38_133_060_S23_L003": {
+		"ID": "TSINJ38",
+		"SM": "OMH_Pdia2",
+		"LB": "OMH_Pdia2",
+		"PU": "HYWWFDSXY.3",
+		"PL": "Illumina"
 	},
 
-	"Pdia3": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"TSINJ47_121_072_S24_L004": {
+		"ID": "TSINJ47",
+		"SM": "OMH_Pdia3",
+		"LB": "OMH_Pdia3",
+		"PU": "HYWWFDSXY.4",
+		"PL": "Illumina"
 	},
 
-	"Pcan1": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"JEJ01_112_081_S1_L002": {
+		"ID": "JEJ01",
+		"SM": "OMH_Pcan1",
+		"LB": "OMH_Pcan1",
+		"PU": "HYWWFDSXY.2",
+		"PL": "Illumina"
 	},
 
-	"Pcan2": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"JEJ3-11_183_010_S3_L004": {
+		"ID": "JEJ3",
+		"SM": "OMH_Pcan2",
+		"LB": "OMH_Pcan2",
+		"PU": "HYWWFDSXY.4",
+		"PL": "Illumina"
 	},
 
-	"Pcan3": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"MERY3_100_093_S2_L003": {
+		"ID": "MERY3",
+		"SM": "OMH_Pcan3",
+		"LB": "OMH_Pcan3",
+		"PU": "HYWWFDSXY.3",
+		"PL": "Illumina"
 	},
 
-	"Pper1": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"ANAL10_111_082_S9_L004": {
+		"ID": "ANAL10",
+		"SM": "OMH_Pper1",
+		"LB": "OMH_Pper1",
+		"PU": "HYWWFDSXY.4",
+		"PL": "Illumina"
 	},
 
-	"Pper2": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"TOBI5-1_135_058_S7_L002": {
+		"ID": "TOBI5-1",
+		"SM": "OMH_Pper2",
+		"LB": "OMH_Pper2",
+		"PU": "HYWWFDSXY.2",
+		"PL": "Illumina"
 	},
 
-	"Pper3": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"TOBI5-3_123_070_S8_L003": {
+		"ID": "TOBI5-3",
+		"SM": "OMH_Pper3",
+		"LB": "OMH_Pper3",
+		"PU": "HYWWFDSXY.3",
+		"PL": "Illumina"
 	},
 
-	"Ptat1": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"DAR4-11_182_011_S11_L003": {
+		"ID": "DAR4.11",
+		"SM": "OMH_Ptat1",
+		"LB": "OMH_Ptat1",
+		"PU": "HYWWFDSXY.3",
+		"PL": "Illumina"
 	},
 
-	"Ptat2": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"DAR4-39_170_023_S12_L004": {
+		"ID": "DAR4-39",
+		"SM": "OMH_Ptat2",
+		"LB": "OMH_Ptat2",
+		"PU": "HYWWFDSXY.4",
+		"PL": "Illumina"
 	},
 
-	"Ptat3": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"DAR4-5_099_094_S10_L002": {
+		"ID": "DAR4-5",
+		"SM": "OMH_Ptat3",
+		"LB": "OMH_Ptat3",
+		"PU": "HYWWFDSXY.2",
+		"PL": "Illumina"
 	},
 
-	"Pcoq1": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"JAM4-16_146_047_S14_L003": {
+		"ID": "JAM4-16",
+		"SM": "OMH_Pcor1",
+		"LB": "OMH_Pcor1",
+		"PU": "HYWWFDSXY.3",
+		"PL": "Illumina"
 	},
 
-	"Pcoq2": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"JAM4-20_134_059_S15_L004": {
+		"ID": "JAM4-20",
+		"SM": "OMH_Pcor2",
+		"LB": "OMH_Pcor2",
+		"PU": "HYWWFDSXY.4",
+		"PL": "Illumina"
 	},
 
-	"Pcoq3": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"JAM4-7_158_035_S13_L002": {
+		"ID": "JAM4-7",
+		"SM": "OMH_Pcor3",
+		"LB": "OMH_Pcor3",
+		"PU": "HYWWFDSXY.2",
+		"PL": "Illumina"
 	},
 
-	"Pcor1": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"KIBO15_122_071_S16_L002": {
+		"ID": "KIBO15",
+		"SM": "OMH_Pdec1",
+		"LB": "OMH_Pdec1",
+		"PU": "HYWWFDSXY.2",
+		"PL": "Illumina"
 	},
 
-	"Pcor2": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"KIBO36_098_095_S18_L004": {
+		"ID": "KIBO36",
+		"SM": "OMH_Pdec2",
+		"LB": "OMH_Pdec2",
+		"PU": "HYWWFDSXY.4",
+		"PL": "Illumina"
 	},
 
-	"Pcor3": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"KIBO44_110_083_S17_L003": {
+		"ID": "KIBO44",
+		"SM": "OMH_Pdec3",
+		"LB": "OMH_Pdec3",
+		"PU": "HYWWFDSXY.3",
+		"PL": "Illumina"
 	},
 
-	"Pdec1": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"KMTEA7-10_157_036_S21_L004": {
+		"ID": "KMTEA7-10",
+		"SM": "OMH_Pver1",
+		"LB": "OMH_Pver1",
+		"PU": "HYWWFDSXY.4",
+		"PL": "Illumina"
 	},
 
-	"Pdec2": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"KMTEA7-2_181_012_S19_L002": {
+		"ID": "KMTEA7-2",
+		"SM": "OMH_Pver2",
+		"LB": "OMH_Pver2",
+		"PU": "HYWWFDSXY.2",
+		"PL": "Illumina"
 	},
 
-	"Pdec3": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"KMTEA7-4_169_024_S20_L003": {
+		"ID": "KMTEA7-4",
+		"SM": "OMH_Pver3",
+		"LB": "OMH_Pver3",
+		"PU": "HYWWFDSXY.3",
+		"PL": "Illumina"
 	},
 
-	"Pver1": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"DASI5-08_192_001_S27_L004": {
+		"ID": "DASI5-08",
+		"SM": "OMH_Alang1",
+		"LB": "OMH_Alang1",
+		"PU": "HYWWFDSXY.4",
+		"PL": "Illumina"
 	},
 
-	"Pver2": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"DASI5-16_109_084_S25_L002": {
+		"ID": "DASI5-16",
+		"SM": "OMH_Alang2",
+		"LB": "OMH_Alang2",
+		"PU": "HYWWFDSXY.2",
+		"PL": "Illumina"
 	},
 
-	"Pver3": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
-	},
-
-	"Avahi1": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
-	},
-
-	"Avahi2": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
-	},
-
-	"Avahi3": {
-		"ID": "",
-		"SM": "",
-		"LB": "",
-		"PU": "",
-		"PL": ""
+	"DASI5-21_097_096_S26_L003": {
+		"ID": "DASI5-21",
+		"SM": "OMH_Alang3",
+		"LB": "OMH_Alang3",
+		"PU": "HYWWFDSXY.3",
+		"PL": "Illumina"
 	},
 
 	"SRR1657028": {
