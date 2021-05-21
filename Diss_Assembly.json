@@ -1,6 +1,6 @@
 {
 "fasta_address": {
-		"pcoq": "ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/956/105/GCF_000956105.1_Pcoq_1.0/GCF_000956105.1_Pcoq_1.0_genomic.fna.gz",
+		"pcoq": "ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/956/105/GCF_000956105.1_Pcoq_1.0/GCF_000956105.1_Pcoq_1.0_genomic.fna.gz"
 	},
 
 "annotation_address": {
@@ -47,8 +47,7 @@
 	"DASI5-08-OMH_Alang1": ["DASI5-08-OMH_Alang1"],
 	"DASI5-16-OMH_Alang2": ["DASI5-16-OMH_Alang2"],
 	"DASI5-21-OMH_Alang3": ["DASI5-21-OMH_Alang3"]
-},
-
+	},
 
 	"RANO330-OMH_Pedw1": {
 		"ID": "RANO330",
