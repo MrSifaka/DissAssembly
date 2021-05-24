@@ -560,7 +560,7 @@ rule gatk_genotypegvcf_genomicsdb:
 
 rule filter_vcfs:
 	input:
-		"combined_vcfs/combined.{genome}.raw.vcf.gz"
+		"vcf_genotyped/{genome}.{chunk}.gatk.called.raw.vcf.gz"
 	output:
 		"vcf_filtered/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.gz"
 	params:
