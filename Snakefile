@@ -558,9 +558,40 @@ rule gatk_genotypegvcf_genomicsdb:
 		"""{params.gatk} --java-options "-Xmx30g -Djava.io.tmpdir={params.temp_dir}" """
 		"""GenotypeGVCFs -R {input.ref} -V gendb://{input.gvcf} -O {output}"""
 
+rule concatenate_split_vcfs:
+	input:
+		vcf = lambda wildcards: expand(
+			"vcf_genotyped/{genome}.{chunk}.gatk.called.raw.vcf.gz",
+			genome=wildcards.genome,
+			chunk=chunk_range)
+	output:
+		"combined_vcfs/combined.{genome}.raw.vcf.gz"
+	params:
+		bcftools = bcftools_path,
+		threads = 2,
+		mem = 8,
+		t = medium
+	shell:
+		"{params.bcftools} concat -O z -o {output} {input.vcf}"
+
+rule index_concatenated_vcf:
+	input:
+		"combined_vcfs/combined.{genome}.raw.vcf.gz"
+	output:
+		"combined_vcfs/combined.{genome}.raw.vcf.gz.tbi"
+	params:
+		tabix = tabix_path,
+		threads = 4,
+		mem = 16,
+		t = very_short
+	shell:
+		"{params.tabix} -p vcf {input}"
+
+
 rule filter_vcfs:
 	input:
-		"vcf_genotyped/{genome}.{chunk}.gatk.called.raw.vcf.gz"
+		vcf = "combined_vcfs/combined.{genome}.raw.vcf.gz",
+		idx = "combined_vcfs/combined.{genome}.raw.vcf.gz.tbi"
 	output:
 		"vcf_filtered/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.gz"
 	params:
