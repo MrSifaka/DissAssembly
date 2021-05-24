@@ -5,7 +5,7 @@ configfile: "Diss_Assembly.json"
 # Shared paths
 adapter_path = "misc/adapter_sequence.fa"
 temp_directory = "temp/"
-fastq_directory = "/media/ajz/Seagate Portable Drive/Diss_SeqData"
+fastq_directory = "/scratch/general/lustre/u6035429/Diss-fastq"
 
 # Runtime values
 very_short = "6:00:00"
