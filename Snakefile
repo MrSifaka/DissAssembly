@@ -5,7 +5,7 @@ configfile: "Diss_Assembly.json"
 # Shared paths
 adapter_path = "misc/adapter_sequence.fa"
 temp_directory = "temp/"
-fastq_directory = "/scratch/general/lustre/u6035429/Diss-fastq"
+fastq_directory = "/media/ajz/Seagate Portable Drive/Diss_SeqData"
 
 # Runtime values
 very_short = "6:00:00"
@@ -48,10 +48,6 @@ sra_ids = [
 	"SRR1575540", "SRR1575532", "SRR1575531", "SRR1575534", "SRR1575533", "SRR1575538",
 	"SRR1575537", "SRR1575536", "SRR1575535", "SRR1575530", "SRR1575529"]
 
-initial_sample_list = ["Pcoq1-Marcella", "Pcoq5-Cornelia", "Pcoq6-Octavia", "Pcoq2-Trajan", "Pcoq3-Hadrian",
-"Pcoq4-Flavia", "Pdia1-Romeo", "Pdia2-Titania", "Ptat1-Agrippa", "Ptat2-Cicero",
-"Pver1-Smoke"]
-
 new_samples = [
 	"RANO330-OMH_Pedw1", "RANO332-OMH_Pedw2", "RANO54-OMH_Pedw3", "TSINJ32-OMH_Pdia1",
 	"TSINJ38-OMH_Pdia2", "TSINJ47-OMH_Pdia3", "JEJ01-OMH_Pcan1", "JEJ3-11-OMH_Pcan2",
@@ -61,7 +57,12 @@ new_samples = [
 	"KIBO44-OMH_Pdec3", "KMTEA7-10-OMH_Pver1", "KMTEA7-2-OMH_Pver2", "KMTEA7-4-OMH_Pver3",
 	"DASI5-08-OMH_Alang1", "DASI5-16-OMH_Alang2", "DASI5-21-OMH_Alang3"]
 
-processed_sample_list = new_samples + initial_sample_list
+initial_sample_list = new_samples + sra_ids
+
+processed_sample_list = new_samples + [
+	"Pcoq1-Marcella", "Pcoq5-Cornelia", "Pcoq6-Octavia", "Pcoq2-Trajan", "Pcoq3-Hadrian",
+	"Pcoq4-Flavia", "Pdia1-Romeo", "Pdia2-Titania", "Ptat1-Agrippa", "Ptat2-Cicero",
+	"Pver1-Smoke"]
 
 
 # Filter parameters
