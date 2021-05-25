@@ -473,8 +473,6 @@ rule index_mkdup_bam:
 		threads = 4,
 		mem = 16,
 		t = very_short
-	conda:
-		"envs/samtools_bwa_env.yaml"
 	shell:
 		"{params.samtools} index {input}"
 
@@ -489,8 +487,6 @@ rule bam_stats:
 		threads = 4,
 		mem = 16,
 		t = very_short
-	conda:
-		"envs/samtools_bwa_env.yaml"
 	shell:
 		"{params.samtools} stats {input.bam} | grep ^SN | cut -f 2- > {output}"
 
