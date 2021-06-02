@@ -289,7 +289,7 @@ rule consolidate_fastq_sra:
 	input:
 		"renamed_fastqs/{sample}_fixed_{read}.fastq.gz"
 	output:
-		"fastqs_consolidated/{sample}_{read}.fastq.gz"
+		"fastqs_consolidated/{sample}_read{read}.fastq.gz"
 	params:
 		threads = 1,
 		mem = 4,
