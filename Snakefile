@@ -289,13 +289,29 @@ rule consolidate_fastq_sra:
 	input:
 		"renamed_fastqs/{sample}_fixed_{read}.fastq.gz"
 	output:
-		"fastqs_consolidated/{sample}_read{read}.fastq.gz"
+		expand(
+			"fastqs_consolidated/{sample}_read{read}.fastq.gz",
+			sample=sra_ids, read=["1","2"])
 	params:
 		threads = 1,
 		mem = 4,
 		t = very_short
 	shell:
 		"ln -srf {input} {output} && touch -h {output}"
+
+rule consolidate_fastq_new:
+	input:
+		os.path.join(fastq_directory, "{sample}_read{read}.fastq.gz")
+	output:
+		expand(
+			"fastqs_consolidated/{sample}_read{read}.fastq.gz",
+			sample=new_samples, read=["1", "2"])
+	params:
+		threads = 1,
+		mem = 4,
+		t = very_short
+	shell:
+		"ln -sf {input} {output} && touch -h {output}"
 
 rule fastqc_analysis:
 	input:
