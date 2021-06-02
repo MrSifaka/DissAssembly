@@ -238,80 +238,80 @@ rule fix_read_IDs_for_paired_fastqs_from_SRA_paired:
 	shell:
 		"{params.rename_sh} in={input.fq1} in2={input.fq2} out={output.out1} out2={output.out2} prefix={params.read_name}"
 
-# rule consolidate_fastqs:
+rule consolidate_fastqs:
+	input:
+		sra1 = expand(
+			"renamed_fastqs/{sample}_fixed_1.fastq.gz",
+			sample=sra_ids),
+		sra2 = expand(
+			"renamed_fastqs/{sample}_fixed_2.fastq.gz",
+			sample=sra_ids),
+		new1 = expand(
+			os.path.join(fastq_directory, "{sample}_read1.fastq.gz"), sample=new_samples),
+		new2 = expand(
+			os.path.join(fastq_directory, "{sample}_read2.fastq.gz"), sample=new_samples)
+	output:
+		expand(
+			"fastqs_consolidated/{sample}_{read}.fastq.gz",
+			sample=initial_sample_list,
+			read=["read1", "read2"])
+	params:
+		threads = 1,
+		mem = 4,
+		t = very_short
+	run:
+		for i in input.sra1:
+			original = i
+			basename = i.split("/")[-1].split("_")[0]
+			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
+			shell(
+				"ln -srf {original} {new_name} && touch -h {new_name}")
+		for i in input.sra2:
+			original = i
+			basename = i.split("/")[-1].split("_")[0]
+			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
+			shell(
+				"ln -srf {original} {new_name} && touch -h {new_name}")
+		for i in input.new1:
+			original = i
+			basename = i.split("/")[-1].split("_")[0]
+			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
+			shell(
+				"ln -sf {original} {new_name} && touch -h {new_name}")
+		for i in input.new2:
+			original = i
+			basename = i.split("/")[-1].split("_")[0]
+			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
+			shell(
+				"ln -sf {original} {new_name} && touch -h {new_name}")
+
+# rule consolidate_fastq_sra:
 # 	input:
-# 		sra1 = expand(
-# 			"renamed_fastqs/{sample}_fixed_1.fastq.gz",
-# 			sample=sra_ids),
-# 		sra2 = expand(
-# 			"renamed_fastqs/{sample}_fixed_2.fastq.gz",
-# 			sample=sra_ids),
-# 		new1 = expand(
-# 			os.path.join(fastq_directory, "{sample}_read1.fastq.gz"), sample=new_samples),
-# 		new2 = expand(
-# 			os.path.join(fastq_directory, "{sample}_read2.fastq.gz"), sample=new_samples)
+# 		"renamed_fastqs/{sample}_fixed_{read}.fastq.gz"
 # 	output:
 # 		expand(
-# 			"fastqs_consolidated/{sample}_{read}.fastq.gz",
-# 			sample=initial_sample_list,
-# 			read=["read1", "read2"])
+# 			"fastqs_consolidated/{sample}_read{read}.fastq.gz",
+# 			sample=sra_ids, read=["1","2"])
 # 	params:
 # 		threads = 1,
 # 		mem = 4,
 # 		t = very_short
-# 	run:
-# 		for i in input.sra1:
-# 			original = i
-# 			basename = i.split("/")[-1].split("_")[0]
-# 			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
-# 			shell(
-# 				"ln {original} {new_name} && touch -h {new_name}")
-# 		for i in input.sra2:
-# 			original = i
-# 			basename = i.split("/")[-1].split("_")[0]
-# 			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
-# 			shell(
-# 				"ln -srf {original} {new_name} && touch -h {new_name}")
-# 		for i in input.new1:
-# 			original = i
-# 			basename = i.split("/")[-1].split("_")[0]
-# 			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
-# 			shell(
-# 				"ln -srf {original} {new_name} && touch -h {new_name}")
-# 		for i in input.new2:
-# 			original = i
-# 			basename = i.split("/")[-1].split("_")[0]
-# 			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
-# 			shell(
-# 				"ln -srf {original} {new_name} && touch -h {new_name}")
-
-rule consolidate_fastq_sra:
-	input:
-		"renamed_fastqs/{sample}_fixed_{read}.fastq.gz"
-	output:
-		expand(
-			"fastqs_consolidated/{sample}_read{read}.fastq.gz",
-			sample=sra_ids, read=["1","2"])
-	params:
-		threads = 1,
-		mem = 4,
-		t = very_short
-	shell:
-		"ln -srf {input} {output} && touch -h {output}"
-
-rule consolidate_fastq_new:
-	input:
-		os.path.join(fastq_directory, "{sample}_read{read}.fastq.gz")
-	output:
-		expand(
-			"fastqs_consolidated/{sample}_read{read}.fastq.gz",
-			sample=new_samples, read=["1", "2"])
-	params:
-		threads = 1,
-		mem = 4,
-		t = very_short
-	shell:
-		"ln -sf {input} {output} && touch -h {output}"
+# 	shell:
+# 		"ln -srf {input} {output} && touch -h {output}"
+#
+# rule consolidate_fastq_new:
+# 	input:
+# 		os.path.join(fastq_directory, "{sample}_read{read}.fastq.gz")
+# 	output:
+# 		expand(
+# 			"fastqs_consolidated/{sample}_read{read}.fastq.gz",
+# 			sample=new_samples, read=["1", "2"])
+# 	params:
+# 		threads = 1,
+# 		mem = 4,
+# 		t = very_short
+# 	shell:
+# 		"ln -sf {input} {output} && touch -h {output}"
 
 rule fastqc_analysis:
 	input:
