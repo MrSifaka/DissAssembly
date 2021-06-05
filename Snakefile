@@ -247,9 +247,11 @@ rule consolidate_fastqs:
 			"renamed_fastqs/{sample}_fixed_2.fastq.gz",
 			sample=sra_ids),
 		new1 = expand(
-			os.path.join(fastq_directory, "{sample}_read1.fastq.gz"), sample=new_samples),
+			"../Diss-fastq/{sample}_read1.fastq.gz",
+			sample=new_samples),
 		new2 = expand(
-			os.path.join(fastq_directory, "{sample}_read2.fastq.gz"), sample=new_samples)
+			"../Diss-fastq/{sample}_read2.fastq.gz",
+			sample=new_samples)
 	output:
 		expand(
 			"fastqs_consolidated/{sample}_{read}.fastq.gz",
@@ -277,13 +279,13 @@ rule consolidate_fastqs:
 			basename = i.split("/")[-1].split("_")[0]
 			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
 			shell(
-				"ln -sf {original} {new_name} && touch -h {new_name}")
+				"ln -srf {original} {new_name} && touch -h {new_name}")
 		for i in input.new2:
 			original = i
 			basename = i.split("/")[-1].split("_")[0]
 			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
 			shell(
-				"ln -sf {original} {new_name} && touch -h {new_name}")
+				"ln -srf {original} {new_name} && touch -h {new_name}")
 
 # rule consolidate_fastq_sra:
 # 	input:
