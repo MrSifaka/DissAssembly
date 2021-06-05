@@ -265,25 +265,25 @@ rule consolidate_fastqs:
 			basename = i.split("/")[-1].split("_")[0]
 			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
 			shell(
-				"ln -srf {original} {new_name} && touch -h {new_name}")
+				"ln -srf ../{original} {new_name} && touch -h {new_name}")
 		for i in input.sra2:
 			original = i
 			basename = i.split("/")[-1].split("_")[0]
 			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
 			shell(
-				"ln -srf {original} {new_name} && touch -h {new_name}")
+				"ln -srf ../{original} {new_name} && touch -h {new_name}")
 		for i in input.new1:
 			original = i
 			basename = i.split("/")[-1].split("_")[0]
 			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
 			shell(
-				"ln -srf {original} {new_name} && touch -h {new_name}")
+				"ln -sf {original} {new_name} && touch -h {new_name}")
 		for i in input.new2:
 			original = i
 			basename = i.split("/")[-1].split("_")[0]
 			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
 			shell(
-				"ln -srf {original} {new_name} && touch -h {new_name}")
+				"ln -sf {original} {new_name} && touch -h {new_name}")
 
 # rule consolidate_fastq_sra:
 # 	input:
