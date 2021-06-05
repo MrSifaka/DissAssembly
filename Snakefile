@@ -241,17 +241,15 @@ rule fix_read_IDs_for_paired_fastqs_from_SRA_paired:
 rule consolidate_fastqs:
 	input:
 		sra1 = expand(
-			os.path.join("/scratch/general/lustre/u6035429/DissAssembly/renamed_fastqs/", "{sample}_fixed_1.fastq.gz"),
+			"renamed_fastqs/{sample}_fixed_1.fastq.gz",
 			sample=sra_ids),
 		sra2 = expand(
-			os.path.join("/scratch/general/lustre/u6035429/DissAssembly/renamed_fastqs/", "{sample}_fixed_2.fastq.gz"),
+			"renamed_fastqs/{sample}_fixed_2.fastq.gz",
 			sample=sra_ids),
 		new1 = expand(
-			os.path.join(fastq_directory, "{sample}_read1.fastq.gz"),
-			sample=new_samples),
+			os.path.join(fastq_directory, "{sample}_read1.fastq.gz"), sample=new_samples),
 		new2 = expand(
-			os.path.join(fastq_directory, "{sample}_read2.fastq.gz"),
-			sample=new_samples)
+			os.path.join(fastq_directory, "{sample}_read2.fastq.gz"), sample=new_samples)
 	output:
 		expand(
 			"fastqs_consolidated/{sample}_{read}.fastq.gz",
@@ -279,13 +277,13 @@ rule consolidate_fastqs:
 			basename = i.split("/")[-1].split("_")[0]
 			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
 			shell(
-				"ln -srf {original} {new_name} && touch -h {new_name}")
+				"ln -sf {original} {new_name} && touch -h {new_name}")
 		for i in input.new2:
 			original = i
 			basename = i.split("/")[-1].split("_")[0]
 			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
 			shell(
-				"ln -srf {original} {new_name} && touch -h {new_name}")
+				"ln -sf {original} {new_name} && touch -h {new_name}")
 
 # rule consolidate_fastq_sra:
 # 	input:
