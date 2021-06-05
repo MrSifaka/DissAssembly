@@ -247,11 +247,9 @@ rule consolidate_fastqs:
 			"renamed_fastqs/{sample}_fixed_2.fastq.gz",
 			sample=sra_ids),
 		new1 = expand(
-			"../Diss-fastq/{sample}_read1.fastq.gz",
-			sample=new_samples),
+			os.path.join(fastq_directory, "{sample}_read1.fastq.gz"), sample=new_samples),
 		new2 = expand(
-			"../Diss-fastq/{sample}_read2.fastq.gz",
-			sample=new_samples)
+			os.path.join(fastq_directory, "{sample}_read2.fastq.gz"), sample=new_samples)
 	output:
 		expand(
 			"fastqs_consolidated/{sample}_{read}.fastq.gz",
