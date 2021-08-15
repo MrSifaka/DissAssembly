@@ -64,6 +64,109 @@ processed_sample_list = new_samples + [
 	"Pcoq4-Flavia", "Pdia1-Romeo", "Pdia2-Titania", "Ptat1-Agrippa", "Ptat2-Cicero",
 	"Pver1-Smoke"]
 
+read1_dict = {
+"RANO330-OMH_Pedw1":"/scratch/general/lustre/u6035429/Diss-fastq/RANO330-OMH_Pedw1_read1.fastq.gz",
+"RANO332-OMH_Pedw2":"/scratch/general/lustre/u6035429/Diss-fastq/RANO332-OMH_Pedw2_read1.fastq.gz",
+"RANO54-OMH_Pedw3":"/scratch/general/lustre/u6035429/Diss-fastq/RANO54-OMH_Pedw3_read1.fastq.gz",
+"TSINJ32-OMH_Pdia1":"/scratch/general/lustre/u6035429/Diss-fastq/TSINJ32-OMH_Pdia1_read1.fastq.gz",
+"TSINJ38-OMH_Pdia2":"/scratch/general/lustre/u6035429/Diss-fastq/TSINJ38-OMH_Pdia2_read1.fastq.gz",
+"TSINJ47-OMH_Pdia3":"/scratch/general/lustre/u6035429/Diss-fastq/TSINJ47-OMH_Pdia3_read1.fastq.gz",
+"JEJ01-OMH_Pcan1":"/scratch/general/lustre/u6035429/Diss-fastq/JEJ01-OMH_Pcan1_read1.fastq.gz",
+"JEJ3-11-OMH_Pcan2":"/scratch/general/lustre/u6035429/Diss-fastq/JEJ3-11-OMH_Pcan2_read1.fastq.gz",
+"MERY3-OMH_Pcan3":"/scratch/general/lustre/u6035429/Diss-fastq/MERY3-OMH_Pcan3_read1.fastq.gz",
+"ANAL10-OMH_Pper1":"/scratch/general/lustre/u6035429/Diss-fastq/ANAL10-OMH_Pper1_read1.fastq.gz",
+"TOBI5-1-OMH_Pper2":"/scratch/general/lustre/u6035429/Diss-fastq/TOBI5-1-OMH_Pper2_read1.fastq.gz",
+"TOBI5-3-OMH_Pper3":"/scratch/general/lustre/u6035429/Diss-fastq/TOBI5-3-OMH_Pper3_read1.fastq.gz",
+"DAR4-11-OMH_Ptat1":"/scratch/general/lustre/u6035429/Diss-fastq/DAR4-11-OMH_Ptat1_read1.fastq.gz",
+"DAR4-39-OMH_Ptat2":"/scratch/general/lustre/u6035429/Diss-fastq/DAR4-39-OMH_Ptat2_read1.fastq.gz",
+"DAR4-5-OMH_Ptat3":"/scratch/general/lustre/u6035429/Diss-fastq/DAR4-5-OMH_Ptat3_read1.fastq.gz",
+"JAM4-16-OMH_Pcor1":"/scratch/general/lustre/u6035429/Diss-fastq/JAM4-16-OMH_Pcor1_read1.fastq.gz",
+"JAM4-20-OMH_Pcor2":"/scratch/general/lustre/u6035429/Diss-fastq/JAM4-20-OMH_Pcor2_read1.fastq.gz",
+"JAM4-7-OMH_Pcor3":"/scratch/general/lustre/u6035429/Diss-fastq/JAM4-7-OMH_Pcor3_read1.fastq.gz",
+"KIBO15-OMH_Pdec1":"/scratch/general/lustre/u6035429/Diss-fastq/KIBO15-OMH_Pdec1_read1.fastq.gz",
+"KIBO36-OMH_Pdec2":"/scratch/general/lustre/u6035429/Diss-fastq/KIBO36-OMH_Pdec2_read1.fastq.gz",
+"KIBO44-OMH_Pdec3":"/scratch/general/lustre/u6035429/Diss-fastq/KIBO44-OMH_Pdec3_read1.fastq.gz",
+"KMTEA7-10-OMH_Pver1":"/scratch/general/lustre/u6035429/Diss-fastq/KMTEA7-10-OMH_Pver1_read1.fastq.gz",
+"KMTEA7-2-OMH_Pver2":"/scratch/general/lustre/u6035429/Diss-fastq/KMTEA7-2-OMH_Pver2_read1.fastq.gz",
+"KMTEA7-4-OMH_Pver3":"/scratch/general/lustre/u6035429/Diss-fastq/KMTEA7-4-OMH_Pver3_read1.fastq.gz",
+"DASI5-08-OMH_Alang1":"/scratch/general/lustre/u6035429/Diss-fastq/DASI5-08-OMH_Alang1_read1.fastq.gz",
+"DASI5-16-OMH_Alang2":"/scratch/general/lustre/u6035429/Diss-fastq/DASI5-16-OMH_Alang2_read1.fastq.gz",
+"DASI5-21-OMH_Alang3":"/scratch/general/lustre/u6035429/Diss-fastq/DASI5-21-OMH_Alang3_read1.fastq.gz",
+"SRR1657028":"renamed_fastqs/SRR1657028_fixed_1.fastq.gz",
+"SRR1657029":"renamed_fastqs/SRR1657029_fixed_1.fastq.gz",
+"SRR1575526":"renamed_fastqs/SRR1575526_fixed_1.fastq.gz",
+"SRR1575545":"renamed_fastqs/SRR1575545_fixed_1.fastq.gz",
+"SRR1575527":"renamed_fastqs/SRR1575527_fixed_1.fastq.gz",
+"SRR1575528":"renamed_fastqs/SRR1575528_fixed_1.fastq.gz",
+"SRR1575543":"renamed_fastqs/SRR1575543_fixed_1.fastq.gz",
+"SRR1575544":"renamed_fastqs/SRR1575544_fixed_1.fastq.gz",
+"SRR1575541":"renamed_fastqs/SRR1575541_fixed_1.fastq.gz",
+"SRR1575542":"renamed_fastqs/SRR1575542_fixed_1.fastq.gz",
+"SRR1575539":"renamed_fastqs/SRR1575539_fixed_1.fastq.gz",
+"SRR1575540":"renamed_fastqs/SRR1575540_fixed_1.fastq.gz",
+"SRR1575532":"renamed_fastqs/SRR1575532_fixed_1.fastq.gz",
+"SRR1575531":"renamed_fastqs/SRR1575531_fixed_1.fastq.gz",
+"SRR1575534":"renamed_fastqs/SRR1575534_fixed_1.fastq.gz",
+"SRR1575533":"renamed_fastqs/SRR1575533_fixed_1.fastq.gz",
+"SRR1575538":"renamed_fastqs/SRR1575538_fixed_1.fastq.gz",
+"SRR1575537":"renamed_fastqs/SRR1575537_fixed_1.fastq.gz",
+"SRR1575536":"renamed_fastqs/SRR1575536_fixed_1.fastq.gz",
+"SRR1575535":"renamed_fastqs/SRR1575535_fixed_1.fastq.gz",
+"SRR1575530":"renamed_fastqs/SRR1575530_fixed_1.fastq.gz",
+"SRR1575529":"renamed_fastqs/SRR1575529_fixed_1.fastq.gz"
+}
+
+read2_dict = {
+"RANO330-OMH_Pedw1":"/scratch/general/lustre/u6035429/Diss-fastq/RANO330-OMH_Pedw1_read2.fastq.gz",
+"RANO332-OMH_Pedw2":"/scratch/general/lustre/u6035429/Diss-fastq/RANO332-OMH_Pedw2_read2.fastq.gz",
+"RANO54-OMH_Pedw3":"/scratch/general/lustre/u6035429/Diss-fastq/RANO54-OMH_Pedw3_read2.fastq.gz",
+"TSINJ32-OMH_Pdia1":"/scratch/general/lustre/u6035429/Diss-fastq/TSINJ32-OMH_Pdia1_read2.fastq.gz",
+"TSINJ38-OMH_Pdia2":"/scratch/general/lustre/u6035429/Diss-fastq/TSINJ38-OMH_Pdia2_read2.fastq.gz",
+"TSINJ47-OMH_Pdia3":"/scratch/general/lustre/u6035429/Diss-fastq/TSINJ47-OMH_Pdia3_read2.fastq.gz",
+"JEJ01-OMH_Pcan1":"/scratch/general/lustre/u6035429/Diss-fastq/JEJ01-OMH_Pcan1_read2.fastq.gz",
+"JEJ3-11-OMH_Pcan2":"/scratch/general/lustre/u6035429/Diss-fastq/JEJ3-11-OMH_Pcan2_read2.fastq.gz",
+"MERY3-OMH_Pcan3":"/scratch/general/lustre/u6035429/Diss-fastq/MERY3-OMH_Pcan3_read2.fastq.gz",
+"ANAL10-OMH_Pper1":"/scratch/general/lustre/u6035429/Diss-fastq/ANAL10-OMH_Pper1_read2.fastq.gz",
+"TOBI5-1-OMH_Pper2":"/scratch/general/lustre/u6035429/Diss-fastq/TOBI5-1-OMH_Pper2_read2.fastq.gz",
+"TOBI5-3-OMH_Pper3":"/scratch/general/lustre/u6035429/Diss-fastq/TOBI5-3-OMH_Pper3_read2.fastq.gz",
+"DAR4-11-OMH_Ptat1":"/scratch/general/lustre/u6035429/Diss-fastq/DAR4-11-OMH_Ptat1_read2.fastq.gz",
+"DAR4-39-OMH_Ptat2":"/scratch/general/lustre/u6035429/Diss-fastq/DAR4-39-OMH_Ptat2_read2.fastq.gz",
+"DAR4-5-OMH_Ptat3":"/scratch/general/lustre/u6035429/Diss-fastq/DAR4-5-OMH_Ptat3_read2.fastq.gz",
+"JAM4-16-OMH_Pcor1":"/scratch/general/lustre/u6035429/Diss-fastq/JAM4-16-OMH_Pcor1_read2.fastq.gz",
+"JAM4-20-OMH_Pcor2":"/scratch/general/lustre/u6035429/Diss-fastq/JAM4-20-OMH_Pcor2_read2.fastq.gz",
+"JAM4-7-OMH_Pcor3":"/scratch/general/lustre/u6035429/Diss-fastq/JAM4-7-OMH_Pcor3_read2.fastq.gz",
+"KIBO15-OMH_Pdec1":"/scratch/general/lustre/u6035429/Diss-fastq/KIBO15-OMH_Pdec1_read2.fastq.gz",
+"KIBO36-OMH_Pdec2":"/scratch/general/lustre/u6035429/Diss-fastq/KIBO36-OMH_Pdec2_read2.fastq.gz",
+"KIBO44-OMH_Pdec3":"/scratch/general/lustre/u6035429/Diss-fastq/KIBO44-OMH_Pdec3_read2.fastq.gz",
+"KMTEA7-10-OMH_Pver1":"/scratch/general/lustre/u6035429/Diss-fastq/KMTEA7-10-OMH_Pver1_read2.fastq.gz",
+"KMTEA7-2-OMH_Pver2":"/scratch/general/lustre/u6035429/Diss-fastq/KMTEA7-2-OMH_Pver2_read2.fastq.gz",
+"KMTEA7-4-OMH_Pver3":"/scratch/general/lustre/u6035429/Diss-fastq/KMTEA7-4-OMH_Pver3_read2.fastq.gz",
+"DASI5-08-OMH_Alang1":"/scratch/general/lustre/u6035429/Diss-fastq/DASI5-08-OMH_Alang1_read2.fastq.gz",
+"DASI5-16-OMH_Alang2":"/scratch/general/lustre/u6035429/Diss-fastq/DASI5-16-OMH_Alang2_read2.fastq.gz",
+"DASI5-21-OMH_Alang3":"/scratch/general/lustre/u6035429/Diss-fastq/DASI5-21-OMH_Alang3_read2.fastq.gz",
+"SRR1657028":"renamed_fastqs/SRR1657028_fixed_2.fastq.gz",
+"SRR1657029":"renamed_fastqs/SRR1657029_fixed_2.fastq.gz",
+"SRR1575526":"renamed_fastqs/SRR1575526_fixed_2.fastq.gz",
+"SRR1575545":"renamed_fastqs/SRR1575545_fixed_2.fastq.gz",
+"SRR1575527":"renamed_fastqs/SRR1575527_fixed_2.fastq.gz",
+"SRR1575528":"renamed_fastqs/SRR1575528_fixed_2.fastq.gz",
+"SRR1575543":"renamed_fastqs/SRR1575543_fixed_2.fastq.gz",
+"SRR1575544":"renamed_fastqs/SRR1575544_fixed_2.fastq.gz",
+"SRR1575541":"renamed_fastqs/SRR1575541_fixed_2.fastq.gz",
+"SRR1575542":"renamed_fastqs/SRR1575542_fixed_2.fastq.gz",
+"SRR1575539":"renamed_fastqs/SRR1575539_fixed_2.fastq.gz",
+"SRR1575540":"renamed_fastqs/SRR1575540_fixed_2.fastq.gz",
+"SRR1575532":"renamed_fastqs/SRR1575532_fixed_2.fastq.gz",
+"SRR1575531":"renamed_fastqs/SRR1575531_fixed_2.fastq.gz",
+"SRR1575534":"renamed_fastqs/SRR1575534_fixed_2.fastq.gz",
+"SRR1575533":"renamed_fastqs/SRR1575533_fixed_2.fastq.gz",
+"SRR1575538":"renamed_fastqs/SRR1575538_fixed_2.fastq.gz",
+"SRR1575537":"renamed_fastqs/SRR1575537_fixed_2.fastq.gz",
+"SRR1575536":"renamed_fastqs/SRR1575536_fixed_2.fastq.gz",
+"SRR1575535":"renamed_fastqs/SRR1575535_fixed_2.fastq.gz",
+"SRR1575530":"renamed_fastqs/SRR1575530_fixed_2.fastq.gz",
+"SRR1575529":"renamed_fastqs/SRR1575529_fixed_2.fastq.gz"
+}
 
 # Filter parameters
 filter_depths = ["10"]
@@ -238,85 +341,57 @@ rule fix_read_IDs_for_paired_fastqs_from_SRA_paired:
 	shell:
 		"{params.rename_sh} in={input.fq1} in2={input.fq2} out={output.out1} out2={output.out2} prefix={params.read_name}"
 
-rule consolidate_fastqs:
-	input:
-		sra1 = expand(
-			"renamed_fastqs/{sample}_fixed_1.fastq.gz",
-			sample=sra_ids),
-		sra2 = expand(
-			"renamed_fastqs/{sample}_fixed_2.fastq.gz",
-			sample=sra_ids),
-		new1 = expand(
-			os.path.join(fastq_directory, "{sample}_read1.fastq.gz"), sample=new_samples),
-		new2 = expand(
-			os.path.join(fastq_directory, "{sample}_read2.fastq.gz"), sample=new_samples)
-	output:
-		expand(
-			"fastqs_consolidated/{sample}_{read}.fastq.gz",
-			sample=initial_sample_list,
-			read=["read1", "read2"])
-	params:
-		threads = 1,
-		mem = 4,
-		t = very_short
-	run:
-		for i in input.sra1:
-			original = i
-			basename = i.split("/")[-1].split("_")[0]
-			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
-			shell(
-				"ln -srf {original} {new_name} && touch -h {new_name}")
-		for i in input.sra2:
-			original = i
-			basename = i.split("/")[-1].split("_")[0]
-			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
-			shell(
-				"ln -srf {original} {new_name} && touch -h {new_name}")
-		for i in input.new1:
-			original = i
-			basename = i.split("/")[-1].split("_")[0]
-			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
-			shell(
-				"ln -sf {original} {new_name} && touch -h {new_name}")
-		for i in input.new2:
-			original = i
-			basename = i.split("/")[-1].split("_")[0]
-			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
-			shell(
-				"ln -sf {original} {new_name} && touch -h {new_name}")
-
-# rule consolidate_fastq_sra:
-# 	input:
-# 		"renamed_fastqs/{sample}_fixed_{read}.fastq.gz"
-# 	output:
-# 		expand(
-# 			"fastqs_consolidated/{sample}_read{read}.fastq.gz",
-# 			sample=sra_ids, read=["1","2"])
-# 	params:
-# 		threads = 1,
-# 		mem = 4,
-# 		t = very_short
-# 	shell:
-# 		"ln -srf {input} {output} && touch -h {output}"
-#
-# rule consolidate_fastq_new:
-# 	input:
-# 		os.path.join(fastq_directory, "{sample}_read{read}.fastq.gz")
-# 	output:
-# 		expand(
-# 			"fastqs_consolidated/{sample}_read{read}.fastq.gz",
-# 			sample=new_samples, read=["1", "2"])
-# 	params:
-# 		threads = 1,
-# 		mem = 4,
-# 		t = very_short
-# 	shell:
-# 		"ln -sf {input} {output} && touch -h {output}"
+#rule consolidate_fastqs:
+#	input:
+#		sra1 = expand(
+#			"renamed_fastqs/{sample}_fixed_1.fastq.gz",
+#			sample=sra_ids),
+#		sra2 = expand(
+#			"renamed_fastqs/{sample}_fixed_2.fastq.gz",
+#			sample=sra_ids),
+#		new1 = expand(
+#			os.path.join(fastq_directory, "{sample}_read1.fastq.gz"), sample=new_samples),
+#		new2 = expand(
+#			os.path.join(fastq_directory, "{sample}_read2.fastq.gz"), sample=new_samples)
+#	output:
+#		expand(
+#			"fastqs_consolidated/{sample}_{read}.fastq.gz",
+#			sample=initial_sample_list,
+#			read=["read1", "read2"])
+#	params:
+#		threads = 1,
+#		mem = 4,
+#		t = very_short
+#	run:
+#		for i in input.sra1:
+#			original = i
+#			basename = i.split("/")[-1].split("_")[0]
+#			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
+#			shell(
+#				"ln -srf {original} {new_name} && touch -h {new_name}")
+#		for i in input.sra2:
+#			original = i
+#			basename = i.split("/")[-1].split("_")[0]
+#			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
+#			shell(
+#				"ln -srf {original} {new_name} && touch -h {new_name}")
+#		for i in input.new1:
+#			original = i
+#			basename = i.split("/")[-1].split("_")[0]
+#			new_name = "fastqs_consolidated/{}_read1.fastq.gz".format(basename)
+#			shell(
+#				"ln -sf {original} {new_name} && touch -h {new_name}")
+#		for i in input.new2:
+#			original = i
+#			basename = i.split("/")[-1].split("_")[0]
+#			new_name = "fastqs_consolidated/{}_read2.fastq.gz".format(basename)
+#			shell(
+#				"ln -sf {original} {new_name} && touch -h {new_name}")
 
 rule fastqc_analysis:
 	input:
-		fq1 = "fastqs_consolidated/{sample}_read1.fastq.gz",
-		fq2 = "fastqs_consolidated/{sample}_read2.fastq.gz"
+		fq1 = read1_dict[{sample}],
+		fq2 = read2_dict[{sample}]
 	output:
 		fq1 = "fastqc/{sample}_read1_fastqc.html",
 		fq2 = "fastqc/{sample}_read2_fastqc.html"
