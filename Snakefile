@@ -437,7 +437,7 @@ rule multiqc_analysis_dna:
 		sra = expand(
 			"fastqc/{sample}_fixed_{read}_fastqc.html",
 			sample=sra_ids,
-			read=["1", "2"])
+			read=["1", "2"]),
 		new = expand(
 			"fastqc/{sample}_{read}_fastqc.html",
 			sample=new_samples,
