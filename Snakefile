@@ -404,8 +404,8 @@ rule fix_read_IDs_for_paired_fastqs_from_SRA_paired:
 
 rule fastqc_analysis_sra:
 	input:
-		fq1 = "renamed_fastqs/{sample}_fixed_1.fastq.gz",
-		fq2 = "renamed_fastqs/{sample}_fixed_2.fastq.gz"
+		fq1 = lambda wildcards: read1_dict[wildcards.sample],
+		fq2 = lambda wildcards: read2_dict[wildcards.sample]
 	output:
 		fq1 = "fastqc/{sample}_fixed_1_fastqc.html",
 		fq2 = "fastqc/{sample}_fixed_2_fastqc.html"
@@ -416,11 +416,11 @@ rule fastqc_analysis_sra:
 		t = very_short
 	shell:
 		"{params.fastqc} -o fastqc {input.fq1} {input.fq2}"
-		
+
 rule fastqc_analysis_new_samples:
 	input:
-		fq1 = read1_dict[{sample}],
-		fq2 = read2_dict[{sample}]
+		fq1 = lambda wildcards: read1_dict[wildcards.sample],
+		fq2 = lambda wildcards: read2_dict[wildcards.sample]
 	output:
 		fq1 = "fastqc/{sample}_read1_fastqc.html",
 		fq2 = "fastqc/{sample}_read2_fastqc.html"
