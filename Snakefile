@@ -455,8 +455,8 @@ rule multiqc_analysis_dna:
 
 rule trim_adapters_paired_bbduk_dna:
 	input:
-		fq1 = read1_dict[{sample}],
-		fq2 = read2_dict[{sample}]
+		fq1 = lambda wildcards: read1_dict[wildcards.sample],
+		fq2 = lambda wildcards: read2_dict[wildcards.sample]
 	output:
 		out_fq1 = "trimmed_fastqs/{sample}_trimmed_read1.fastq.gz",
 		out_fq2 = "trimmed_fastqs/{sample}_trimmed_read2.fastq.gz"
