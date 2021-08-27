@@ -400,8 +400,6 @@ rule fix_read_IDs_for_paired_fastqs_from_SRA_paired:
 #			shell(
 #				"ln -sf {original} {new_name} && touch -h {new_name}")
 
-# Andrew, the fastqc_analysis and multiqc_analysis rules won't work because the output pattern won't match the output
-
 rule fastqc_analysis_sra:
 	input:
 		fq1 = lambda wildcards: read1_dict[wildcards.sample],
