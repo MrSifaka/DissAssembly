@@ -67,7 +67,7 @@ processed_sample_list = new_samples + [
 read1_dict = {}
 read2_dict = {}
 
-for i in new samples:
+for i in new_samples:
 	read1_dict[i] = os.path.join(fastq_directory, "{}_read1.fastq.gz".format(i))
 	read2_dict[i] = os.path.join(fastq_directory, "{}_read2.fastq.gz".format(i))
 
