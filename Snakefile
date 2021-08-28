@@ -73,7 +73,7 @@ for i in new_samples:
 
 for i in sra_ids:
 	read1_dict[i] = "renamed_fastqs/{}_fixed_1.fastq.gz".format(i)
-	read2_dict[i] = "renamed_fastqs/{}_fixed_1.fastq.gz".format(i)
+	read2_dict[i] = "renamed_fastqs/{}_fixed_2.fastq.gz".format(i)
 
 
 # read1_dict = {
