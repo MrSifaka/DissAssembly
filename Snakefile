@@ -84,15 +84,15 @@ rule all:
 	input:
 		"multiqc/multiqc_report.html",
 		"multiqc_trimmed/multiqc_report.html",
-		expand(
-			"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
-			sample=processed_sample_list, genome=mapping_genomes),
-		expand(
-			"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats",
-			genome=mapping_genomes, mq=filter_mapqs, dp=filter_depths),
-		expand(
-			"mosdepth_results/{sample}.{genome}.per-base.dp{dp}.merged.bed",
-			sample=processed_sample_list, genome=mapping_genomes, dp=filter_depths),
+#		expand(
+#			"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
+#			sample=processed_sample_list, genome=mapping_genomes),
+#		expand(
+#			"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats",
+#			genome=mapping_genomes, mq=filter_mapqs, dp=filter_depths),
+#		expand(
+#			"mosdepth_results/{sample}.{genome}.per-base.dp{dp}.merged.bed",
+#			sample=processed_sample_list, genome=mapping_genomes, dp=filter_depths)
 
 rule get_annotation:
 	output:
@@ -361,7 +361,7 @@ rule trim_adapters_paired_bbduk_dna:
 		mem = 8,
 		t = very_short
 	shell:
-		"{params.bbduk} -Xmx3g in1={input.fq1} in2={input.fq2} out1={output.out_fq1} out2={output.out_fq2} ref={params.adapter} ktrim=r k=21 mink=11 hdist=2 tbo tpe qtrim=rl trimq=10"
+		"{params.bbduk} -Xmx3g in1={input.fq1} in2={input.fq2} out1={output.out_fq1} out2={output.out_fq2} ref={params.adapter} ktrim=r k=21 mink=11 hdist=2 tbo tpe qtrim=rl trimq=10 trimpolyg=10"
 
 rule fastqc_analysis_trimmed:
 	input:
