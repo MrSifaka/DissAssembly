@@ -84,15 +84,15 @@ rule all:
 	input:
 		"multiqc/multiqc_report.html",
 		"multiqc_trimmed/multiqc_report.html",
-#		expand(
-#			"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
-#			sample=processed_sample_list, genome=mapping_genomes),
+		expand(
+			"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
+			sample=processed_sample_list, genome=mapping_genomes),
 #		expand(
 #			"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats",
 #			genome=mapping_genomes, mq=filter_mapqs, dp=filter_depths),
 #		expand(
 #			"mosdepth_results/{sample}.{genome}.per-base.dp{dp}.merged.bed",
-#			sample=processed_sample_list, genome=mapping_genomes, dp=filter_depths)
+#			sample=processed_sample_list, genome=mapping_genomes, dp=filter_depths),
 
 rule get_annotation:
 	output:
