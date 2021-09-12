@@ -64,6 +64,9 @@ processed_sample_list = new_samples + [
 	"Pcoq4-Flavia", "Pdia1-Romeo", "Pdia2-Titania", "Ptat1-Agrippa", "Ptat2-Cicero",
 	"Pver1-Smoke"]
 
+QCfailed_samples = "Pcoq1-Marcella"
+QCpassed_sample_list = [i for i in processed_sample_list if i != QCfailed_samples]
+
 read1_dict = {}
 read2_dict = {}
 
@@ -87,12 +90,12 @@ rule all:
 		expand(
 			"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
 			sample=processed_sample_list, genome=mapping_genomes),
-#		expand(
-#			"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats",
-#			genome=mapping_genomes, mq=filter_mapqs, dp=filter_depths),
-#		expand(
-#			"mosdepth_results/{sample}.{genome}.per-base.dp{dp}.merged.bed",
-#			sample=processed_sample_list, genome=mapping_genomes, dp=filter_depths),
+		expand(
+			"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats",
+			genome=mapping_genomes, mq=filter_mapqs, dp=filter_depths),
+		expand(
+			"mosdepth_results/{sample}.{genome}.per-base.dp{dp}.merged.bed",
+			sample=QCpassed_sample_list, genome=mapping_genomes, dp=filter_depths),
 
 rule get_annotation:
 	output:
