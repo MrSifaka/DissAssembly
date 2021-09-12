@@ -549,7 +549,7 @@ rule genomicsdbimport_combine_gvcfs_per_chunk:
 		ref = "reference_genomes/{genome}.fa",
 		gvcfs = lambda wildcards: expand(
 			"gvcf/{sample}.{genome}.{chunk}.g.vcf.gz",
-			sample=processed_sample_list,
+			sample=QCpassed_sample_list,
 			genome=[wildcards.genome],
 			chunk=[wildcards.chunk]),
 		chunkfile = "reference_genomes/{genome}_split_chunk{chunk}.bed"
