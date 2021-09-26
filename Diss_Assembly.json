@@ -1,10 +1,12 @@
 {
 "fasta_address": {
-		"pcoq": "ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/956/105/GCF_000956105.1_Pcoq_1.0/GCF_000956105.1_Pcoq_1.0_genomic.fna.gz"
+		"pcoq": "ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/956/105/GCF_000956105.1_Pcoq_1.0/GCF_000956105.1_Pcoq_1.0_genomic.fna.gz",
+		"pcoq-HiC": "https://www.dropbox.com/sh/jihxgolwuq706ze/AAALwu7eR75rlRzKmbYF2bjxa/Pcoq_1.0_HiC.fasta.gz"
 	},
 
 "annotation_address": {
-		"pcoq": "ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/956/105/GCF_000956105.1_Pcoq_1.0/GCF_000956105.1_Pcoq_1.0_genomic.gff.gz"
+		"pcoq": "ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/956/105/GCF_000956105.1_Pcoq_1.0/GCF_000956105.1_Pcoq_1.0_genomic.gff.gz",
+		"pcoq-HiC": "https://www.dropbox.com/sh/jihxgolwuq706ze/AAALwu7eR75rlRzKmbYF2bjxa/Pcoq_1.0_HiC.fasta.gz"
 	},
 
 "to_merge": {
@@ -389,6 +391,14 @@
 		"SM": "Pdia2-Titania",
 		"LB": "Pdia2-Titania",
 		"PU": "SRR1575533",
+		"PL": "Illumina"
+	},
+
+	"SRR3361455": {
+		"ID": "SRR3361455",
+		"SM": "Pdia2-Oberon",
+		"LB": "Pdia2-Oberon",
+		"PU": "SRR3361455",
 		"PL": "Illumina"
 	},
 
