@@ -40,7 +40,7 @@ vcflib_path = "vcflib"
 vcftools_path = "vcftools"
 
 # Samples and genomes
-mapping_genomes = ["pcoq", "pcoq-HiC"]
+mapping_genomes = ["pcoq-HiC"]
 
 sra_ids = [
 	"SRR1657028", "SRR1657029", "SRR1575526", "SRR1575545", "SRR1575527",
@@ -90,12 +90,12 @@ rule all:
 		expand(
 			"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
 			sample=processed_sample_list, genome=mapping_genomes),
-#		expand(
-#			"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats",
-#			genome=mapping_genomes, mq=filter_mapqs, dp=filter_depths),
-#		expand(
-#			"mosdepth_results/{sample}.{genome}.per-base.dp{dp}.merged.bed",
-#			sample=QCpassed_sample_list, genome=mapping_genomes, dp=filter_depths),
+		expand(
+			"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats",
+			genome=mapping_genomes, mq=filter_mapqs, dp=filter_depths),
+		expand(
+			"mosdepth_results/{sample}.{genome}.per-base.dp{dp}.merged.bed",
+			sample=QCpassed_sample_list, genome=mapping_genomes, dp=filter_depths),
 
 rule get_annotation:
 	output:
