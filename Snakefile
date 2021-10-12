@@ -64,7 +64,7 @@ processed_sample_list = new_samples + [
 	"Pcoq4-Flavia", "Pdia1-Romeo", "Pdia2-Titania", "Ptat1-Agrippa", "Ptat2-Cicero",
 	"Pver1-Smoke"]
 
-QCfailed_samples = ""
+QCfailed_samples = "Pcoq1-Marcella"
 QCpassed_sample_list = [i for i in processed_sample_list if i != QCfailed_samples]
 
 read1_dict = {}
