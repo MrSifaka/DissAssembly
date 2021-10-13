@@ -6,7 +6,7 @@
 
 "annotation_address": {
 		"pcoq": "ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/956/105/GCF_000956105.1_Pcoq_1.0/GCF_000956105.1_Pcoq_1.0_genomic.gff.gz",
-		"pcoq-HiC": "https://www.dropbox.com/sh/jihxgolwuq706ze/AAALwu7eR75rlRzKmbYF2bjxa/Pcoq_1.0_HiC.fasta.gz"
+		"pcoq-HiC": "https://www.dropbox.com/sh/jihxgolwuq706ze/AACI1EQeHOdWZkkKAyyOoKg0a/Pcoq_1.0_HiC.fasta_v2.functional.gff3.gz"
 	},
 
 "to_merge": {
