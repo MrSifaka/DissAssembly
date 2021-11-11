@@ -537,10 +537,10 @@ rule gatk_gvcf_per_chunk:
 		temp_dir = temp_directory,
 		gatk = gatk_path,
 		threads = 4,
-		mem = 16,
+		mem = 32,
 		t = very_long
 	shell:
-		"""{params.gatk} --java-options "-Xmx15g -Djava.io.tmpdir={params.temp_dir}" """
+		"""{params.gatk} --java-options "-Xmx30g -Djava.io.tmpdir={params.temp_dir}" """
 		"""HaplotypeCaller -R {input.ref} -I {input.bam} -L {input.chunkfile} """
 		"""-ERC GVCF --do-not-run-physical-phasing -O {output}"""
 
@@ -559,7 +559,7 @@ rule genomicsdbimport_combine_gvcfs_per_chunk:
 		temp_dir = temp_directory,
 		gatk = gatk_path,
 		threads = 4,
-		mem = 16,
+		mem = 32,
 		t = very_long
 	run:
 		variant_files = []
@@ -567,7 +567,7 @@ rule genomicsdbimport_combine_gvcfs_per_chunk:
 			variant_files.append("--variant " + i)
 		variant_files = " ".join(variant_files)
 		shell(
-			"""{params.gatk} --java-options "-Xmx15g -Djava.io.tmpdir={params.temp_dir}" """
+			"""{params.gatk} --java-options "-Xmx30g -Djava.io.tmpdir={params.temp_dir}" """
 			"""GenomicsDBImport -R {input.ref} {variant_files} """
 			"""--genomicsdb-workspace-path {output} -L {input.chunkfile}""")
 
@@ -667,19 +667,18 @@ rule vcf_stats:
 rule mosdepth_depth:
 	input:
 		bam = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam",
-		bai = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam.bai",
-		bed = "regions/{genome}.cds.merged.bed"
+		bai = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam.bai"
 	output:
-		dist = "mosdepth_results/{sample}.{genome}.mosdepth.global.dist.txt",
-		per_base = "mosdepth_results/{sample}.{genome}.per-base.bed.gz"
+		dist = "mosdepth_results/{sample}.{genome}.total.mosdepth.global.dist.txt",
+		per_base = "mosdepth_results/{sample}.{genome}.total.per-base.bed.gz"
 	params:
 		mosdepth = mosdepth_path,
-		prefix = "mosdepth_results/{sample}.{genome}",
+		prefix = "mosdepth_results/{sample}.{genome}.total",
 		threads = 4,
 		mem = 16,
 		t = long
 	shell:
-		"{params.mosdepth} --by {input.bed} {params.prefix} {input.bam}"
+		"{params.mosdepth} --fast-mode -F 1024 {params.prefix} {input}"
 
 rule filter_mosdepth:
 	input:
@@ -694,3 +693,16 @@ rule filter_mosdepth:
 		t = very_short
 	shell:
 		"zcat {input} | awk '$4 >= {params.dp}' | {params.bedtools} merge -i - > {output}"
+
+# New mosdepth command:
+#rule mosdepth_total_perbase:
+#input:
+#"merged_bams/{sample}.{genome}.sorted.merged.mkdup.bam"
+#output:
+#"mosdepth_total/{sample}.{genome}.total.mosdepth.global.dist.txt",
+#"mosdepth_total/{sample}.{genome}.total.mosdepth.summary.txt"
+#params:
+#mosdepth = mosdepth_path,
+#prefix = "mosdepth_total/{sample}.{genome}.total"
+#shell:
+#"{params.mosdepth} --fast-mode -F 1024 {params.prefix} {input}"
