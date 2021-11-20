@@ -666,8 +666,7 @@ rule vcf_stats:
 
 rule mosdepth_depth:
 	input:
-		bam = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam",
-		bai = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam.bai"
+		"processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam"
 	output:
 		dist = "mosdepth_results/{sample}.{genome}.total.mosdepth.global.dist.txt",
 		per_base = "mosdepth_results/{sample}.{genome}.total.per-base.bed.gz"
