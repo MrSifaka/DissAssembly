@@ -94,7 +94,7 @@ rule all:
 			"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats",
 			genome=mapping_genomes, mq=filter_mapqs, dp=filter_depths),
 		expand(
-			"mosdepth_results/{sample}.{genome}.per-base.dp{dp}.merged.bed",
+			"mosdepth_results/{sample}.{genome}.total.per-base.dp{dp}.merged.bed",
 			sample=QCpassed_sample_list, genome=mapping_genomes, dp=filter_depths),
 
 rule get_annotation:
