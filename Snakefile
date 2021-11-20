@@ -682,9 +682,9 @@ rule mosdepth_depth:
 
 rule filter_mosdepth:
 	input:
-		"mosdepth_results/{sample}.{genome}.per-base.bed.gz"
+		"mosdepth_results/{sample}.{genome}.total.per-base.bed.gz"
 	output:
-		"mosdepth_results/{sample}.{genome}.per-base.dp{dp}.merged.bed"
+		"mosdepth_results/{sample}.{genome}.total.per-base.dp{dp}.merged.bed"
 	params:
 		dp = "{dp}",
 		bedtools = bedtools_path,
