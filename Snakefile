@@ -85,8 +85,8 @@ filter_mapqs = ["40"]
 
 rule all:
 	input:
-		"multiqc/multiqc_report.html",
-		"multiqc_trimmed/multiqc_report.html",
+	#	"multiqc/multiqc_report.html",
+	#	"multiqc_trimmed/multiqc_report.html",
 		expand(
 			"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
 			sample=processed_sample_list, genome=mapping_genomes),
@@ -679,7 +679,7 @@ rule mosdepth_depth:
 		t = long
 	shell:
 		"{params.mosdepth} --fast-mode -F 1024 {params.prefix} {input}"
-		
+
 rule filter_mosdepth:
 	input:
 		"mosdepth_results/{sample}.{genome}.per-base.bed.gz"
