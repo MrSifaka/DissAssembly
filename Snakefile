@@ -679,7 +679,7 @@ rule mosdepth_depth:
 		t = long
 	shell:
 		"{params.mosdepth} --fast-mode -F 1024 {params.prefix} {input}"
-
+		
 rule filter_mosdepth:
 	input:
 		"mosdepth_results/{sample}.{genome}.per-base.bed.gz"
