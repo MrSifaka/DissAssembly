@@ -533,14 +533,16 @@ rule gatk_gvcf_per_chunk:
 		chunkfile = "reference_genomes/{genome}_split_chunk{chunk}.bed"
 	output:
 		"gvcf/{sample}.{genome}.{chunk}.g.vcf.gz"
+	benchmark:
+		"benchmark/{sample}.{genome}.{chunk}.HaplotypeCaller.benchmark.txt"
 	params:
 		temp_dir = temp_directory,
 		gatk = gatk_path,
-		threads = 4,
+		threads = 8,
 		mem = 32,
 		t = very_long
 	shell:
-		"""{params.gatk} --java-options "-Xmx30g -Djava.io.tmpdir={params.temp_dir}" """
+		"""{params.gatk} --spark-master local[{params.threads}] --java-options "-Xmx30g -Djava.io.tmpdir={params.temp_dir}" """
 		"""HaplotypeCaller -R {input.ref} -I {input.bam} -L {input.chunkfile} """
 		"""-ERC GVCF --do-not-run-physical-phasing -O {output}"""
 
@@ -555,6 +557,8 @@ rule genomicsdbimport_combine_gvcfs_per_chunk:
 		chunkfile = "reference_genomes/{genome}_split_chunk{chunk}.bed"
 	output:
 		directory("gvcf_databases/{genome}-{chunk}")
+	benchmark:
+		"benchmark/{genome}.{chunk}.GenomicsDBImport.benchmark.txt"
 	params:
 		temp_dir = temp_directory,
 		gatk = gatk_path,
@@ -577,6 +581,8 @@ rule gatk_genotypegvcf_genomicsdb:
 		ref = "reference_genomes/{genome}.fa"
 	output:
 		"vcf_genotyped/{genome}.{chunk}.gatk.called.raw.vcf.gz"
+	benchmark:
+		"benchmark/{genome}.{chunk}.GenotypeGVCFs.benchmark.txt"
 	params:
 		temp_dir = temp_directory,
 		gatk = gatk_path,
@@ -595,6 +601,8 @@ rule concatenate_split_vcfs:
 			chunk=chunk_range)
 	output:
 		"combined_vcfs/combined.{genome}.raw.vcf.gz"
+	benchmark:
+		"benchmark/{genome}.concatVCF.benchmark.txt"
 	params:
 		bcftools = bcftools_path,
 		threads = 2,
@@ -608,6 +616,8 @@ rule index_concatenated_vcf:
 		"combined_vcfs/combined.{genome}.raw.vcf.gz"
 	output:
 		"combined_vcfs/combined.{genome}.raw.vcf.gz.tbi"
+	benchmark:
+		"benchmark/{genome}.IndexConcatVCF.benchmark.txt"
 	params:
 		tabix = tabix_path,
 		threads = 4,
@@ -623,6 +633,8 @@ rule filter_vcfs:
 		idx = "combined_vcfs/combined.{genome}.raw.vcf.gz.tbi"
 	output:
 		"vcf_filtered/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.gz"
+	benchmark:
+		"benchmark/{genome}.filterVCF_mq{mq}_dp{dp}.benchmark.txt"
 	params:
 		bgzip = bgzip_path,
 		bcftools = bcftools_path,
@@ -642,6 +654,8 @@ rule index_filtered_vcf:
 		"vcf_filtered/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.gz"
 	output:
 		"vcf_filtered/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.gz.tbi"
+	benchmark:
+		"benchmark/{genome}.IndexFilterVCF_mq{mq}_dp{dp}.benchmark.txt"
 	params:
 		tabix = tabix_path,
 		threads = 4,
@@ -656,6 +670,8 @@ rule vcf_stats:
 		tbi = "vcf_filtered/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.gz.tbi"
 	output:
 		"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats"
+	benchmark:
+		"benchmark/{genome}.StatsFilteredVCF_mq{mq}_dp{dp}.benchmark.txt"
 	params:
 		bcftools = bcftools_path,
 		threads = 4,
@@ -692,16 +708,3 @@ rule filter_mosdepth:
 		t = very_short
 	shell:
 		"zcat {input} | awk '$4 >= {params.dp}' | {params.bedtools} merge -i - > {output}"
-
-# New mosdepth command:
-#rule mosdepth_total_perbase:
-#input:
-#"merged_bams/{sample}.{genome}.sorted.merged.mkdup.bam"
-#output:
-#"mosdepth_total/{sample}.{genome}.total.mosdepth.global.dist.txt",
-#"mosdepth_total/{sample}.{genome}.total.mosdepth.summary.txt"
-#params:
-#mosdepth = mosdepth_path,
-#prefix = "mosdepth_total/{sample}.{genome}.total"
-#shell:
-#"{params.mosdepth} --fast-mode -F 1024 {params.prefix} {input}"
