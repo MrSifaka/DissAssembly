@@ -573,7 +573,7 @@ rule genomicsdbimport_combine_gvcfs_per_chunk:
 		shell(
 			"""{params.gatk} --java-options "-Xmx30g -Djava.io.tmpdir={params.temp_dir}" """
 			"""GenomicsDBImport -R {input.ref} {variant_files} """
-			"""--genomicsdb-workspace-path {output} -L {input.chunkfile}""")
+			"""--genomicsdb-workspace-path {output} -L {input.chunkfile} --reader-threads {params.threads}""")
 
 rule gatk_genotypegvcf_genomicsdb:
 	input:
