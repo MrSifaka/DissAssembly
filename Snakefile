@@ -542,9 +542,9 @@ rule gatk_gvcf_per_chunk:
 		mem = 32,
 		t = very_long
 	shell:
-		"""{params.gatk} --spark-master local[{params.threads}] --java-options "-Xmx30g -Djava.io.tmpdir={params.temp_dir}" """
-		"""HaplotypeCaller -R {input.ref} -I {input.bam} -L {input.chunkfile} """
-		"""-ERC GVCF --do-not-run-physical-phasing -O {output}"""
+		"""{params.gatk} --java-options "-Xmx30g -Djava.io.tmpdir={params.temp_dir}" """
+		"""HaplotypeCallerSpark -R {input.ref} -I {input.bam} -L {input.chunkfile} """
+		"""-ERC GVCF --do-not-run-physical-phasing -O {output} --spark-runner LOCAL --spark-master local[*]"""
 
 rule genomicsdbimport_combine_gvcfs_per_chunk:
 	input:
