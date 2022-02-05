@@ -17,6 +17,7 @@ very_long = "72:00:00"
 # Parameters for splitting reference
 num_chunks = 25
 chunk_range = [x for x in range(1, num_chunks + 1)]
+chunk_range2 = [0] + chunk_range
 
 # Tool paths
 bbduk_path = "bbduk.sh"
@@ -85,11 +86,11 @@ filter_mapqs = ["40"]
 
 rule all:
 	input:
-	#	"multiqc/multiqc_report.html",
-	#	"multiqc_trimmed/multiqc_report.html",
-		expand(
-			"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
-			sample=processed_sample_list, genome=mapping_genomes),
+		"multiqc/multiqc_report.html",
+		"multiqc_trimmed/multiqc_report.html",
+	#	expand(
+	#		"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
+	#		sample=processed_sample_list, genome=mapping_genomes),
 		expand(
 			"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats",
 			genome=mapping_genomes, mq=filter_mapqs, dp=filter_depths),
@@ -543,8 +544,8 @@ rule gatk_gvcf_per_chunk:
 		t = very_long
 	shell:
 		"""{params.gatk} --java-options "-Xmx30g -Djava.io.tmpdir={params.temp_dir}" """
-		"""HaplotypeCallerSpark -R {input.ref} -I {input.bam} -L {input.chunkfile} """
-		"""-ERC GVCF --do-not-run-physical-phasing -O {output} --spark-runner LOCAL --spark-master local[*]"""
+		"""HaplotypeCaller -R {input.ref} -I {input.bam} -L {input.chunkfile} """
+		"""-ERC GVCF --do-not-run-physical-phasing -O {output} """
 
 rule genomicsdbimport_combine_gvcfs_per_chunk:
 	input:
@@ -573,7 +574,7 @@ rule genomicsdbimport_combine_gvcfs_per_chunk:
 		shell(
 			"""{params.gatk} --java-options "-Xmx30g -Djava.io.tmpdir={params.temp_dir}" """
 			"""GenomicsDBImport -R {input.ref} {variant_files} """
-			"""--genomicsdb-workspace-path {output} -L {input.chunkfile} --reader-threads {params.threads}""")
+			"""--genomicsdb-workspace-path {output} -L {input.chunkfile} """)
 
 rule gatk_genotypegvcf_genomicsdb:
 	input:
@@ -598,7 +599,7 @@ rule concatenate_split_vcfs:
 		vcf = lambda wildcards: expand(
 			"vcf_genotyped/{genome}.{chunk}.gatk.called.raw.vcf.gz",
 			genome=wildcards.genome,
-			chunk=chunk_range)
+			chunk=chunk_range2)
 	output:
 		"combined_vcfs/combined.{genome}.raw.vcf.gz"
 	benchmark:
