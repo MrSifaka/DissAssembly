@@ -88,9 +88,9 @@ rule all:
 	input:
 		"multiqc/multiqc_report.html",
 		"multiqc_trimmed/multiqc_report.html",
-	#	expand(
-	#		"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
-	#		sample=processed_sample_list, genome=mapping_genomes),
+		expand(
+			"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
+			sample=processed_sample_list, genome=mapping_genomes),
 		expand(
 			"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats",
 			genome=mapping_genomes, mq=filter_mapqs, dp=filter_depths),
