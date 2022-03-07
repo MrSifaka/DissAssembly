@@ -564,7 +564,7 @@ rule genomicsdbimport_combine_gvcfs_per_chunk:
 		temp_dir = temp_directory,
 		gatk = gatk_path,
 		threads = 4,
-		mem = 32,
+		mem = 36,
 		t = very_long
 	run:
 		variant_files = []
@@ -572,7 +572,7 @@ rule genomicsdbimport_combine_gvcfs_per_chunk:
 			variant_files.append("--variant " + i)
 		variant_files = " ".join(variant_files)
 		shell(
-			"""{params.gatk} --java-options "-Xmx30g -Djava.io.tmpdir={params.temp_dir}" """
+			"""{params.gatk} --java-options "-Xmx34g -Djava.io.tmpdir={params.temp_dir}" """
 			"""GenomicsDBImport -R {input.ref} {variant_files} """
 			"""--genomicsdb-workspace-path {output} -L {input.chunkfile} """)
 
