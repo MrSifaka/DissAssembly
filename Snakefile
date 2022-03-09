@@ -574,7 +574,7 @@ rule genomicsdbimport_combine_gvcfs_per_chunk:
 		shell(
 			"""{params.gatk} --java-options "-Xmx34g -Djava.io.tmpdir={params.temp_dir}" """
 			"""GenomicsDBImport -R {input.ref} {variant_files} """
-			"""--genomicsdb-workspace-path {output} -L {input.chunkfile} """)
+			"""--genomicsdb-workspace-path {output} -L {input.chunkfile} --genomicsdb-shared-posixfs-optimizations true""")
 
 rule gatk_genotypegvcf_genomicsdb:
 	input:
@@ -588,10 +588,10 @@ rule gatk_genotypegvcf_genomicsdb:
 		temp_dir = temp_directory,
 		gatk = gatk_path,
 		threads = 8,
-		mem = 32,
+		mem = 64,
 		t = very_long
 	shell:
-		"""{params.gatk} --java-options "-Xmx30g -Djava.io.tmpdir={params.temp_dir}" """
+		"""{params.gatk} --java-options "-Xmx62g -Djava.io.tmpdir={params.temp_dir}" """
 		"""GenotypeGVCFs -R {input.ref} -V gendb://{input.gvcf} -O {output}"""
 
 rule concatenate_split_vcfs:
