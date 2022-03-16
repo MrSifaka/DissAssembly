@@ -82,7 +82,7 @@ for i in sra_ids:
 
 # Filter parameters
 filter_depths = ["10"]
-filter_mapqs = ["20"]
+filter_mapqs = ["1", "5", "10", "20"]
 
 rule all:
 	input:
