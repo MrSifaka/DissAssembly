@@ -538,7 +538,7 @@ rule plot_bamMQs:
 		t = medium
 	shell:
 		"python scripts/bam_MQPlot.py --bam {input.bam} "
-		"--png {output.bam}"
+		"--png {output.png}"
 
 # Call and filter variants
 rule gatk_gvcf_per_chunk:
