@@ -97,6 +97,9 @@ rule all:
 		expand(
 			"mosdepth_results/{sample}.{genome}.total.per-base.dp{dp}.merged.bed",
 			sample=QCpassed_sample_list, genome=mapping_genomes, dp=filter_depths),
+		expand(
+			"stats/{sample}.{genome}.bamMQ_Dist.png",
+			sample=processed_sample_list, genome=mapping_genomes),
 
 rule get_annotation:
 	output:
@@ -523,6 +526,19 @@ rule bam_stats:
 		t = very_short
 	shell:
 		"{params.samtools} stats {input.bam} | grep ^SN | cut -f 2- > {output}"
+
+rule plot_bamMQs:
+	input:
+		bam = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam"
+	output:
+		png = "stats/{sample}.{genome}.bamMQ_Dist.png"
+	params:
+		threads = 2,
+		mem = 8,
+		t = medium
+	shell:
+		"python scripts/bam_MQPlot.py --bam {input.bam} "
+		"--png {output.bam}"
 
 # Call and filter variants
 rule gatk_gvcf_per_chunk:
