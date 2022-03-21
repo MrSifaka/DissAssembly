@@ -534,7 +534,7 @@ rule plot_bamMQs:
 		png = "stats/{sample}.{genome}.bamMQ_Dist.png"
 	params:
 		threads = 2,
-		mem = 16,
+		mem = 32,
 		t = medium
 	shell:
 		"python scripts/bam_MQPlot.py --bam {input.bam} "
