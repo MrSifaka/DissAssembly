@@ -82,7 +82,7 @@ for i in sra_ids:
 
 # Filter parameters
 filter_depths = ["10"]
-filter_mapqs = ["1", "5", "10", "20"]
+filter_mapqs = ["30"]
 
 rule all:
 	input:
@@ -116,7 +116,7 @@ rule get_annotation:
 
 rule extract_cds_from_gff:
 	input:
-		"reference_genomes/{genome}.gff"
+		ancient("reference_genomes/{genome}.gff")
 	output:
 		"regions/{genome}.cds.gff"
 	params:
@@ -128,7 +128,7 @@ rule extract_cds_from_gff:
 
 rule gff2bed:
 	input:
-		"regions/{genome}.cds.gff"
+		ancient("regions/{genome}.cds.gff")
 	output:
 		"regions/{genome}.cds.merged.bed"
 	params:
@@ -155,7 +155,7 @@ rule get_fasta:
 
 rule prepare_reference_fai:
 	input:
-		ref = "reference_genomes/{genome}.fa"
+		ancient(ref = "reference_genomes/{genome}.fa")
 	output:
 		fai = "reference_genomes/{genome}.fa.fai",
 	params:
@@ -168,7 +168,7 @@ rule prepare_reference_fai:
 
 rule prepare_reference_dict:
 	input:
-		ref = "reference_genomes/{genome}.fa"
+		ancient(ref = "reference_genomes/{genome}.fa")
 	output:
 		dict = "reference_genomes/{genome}.dict"
 	params:
@@ -181,7 +181,7 @@ rule prepare_reference_dict:
 
 rule bwa_indexing:
 	input:
-		ref = "reference_genomes/{genome}.fa"
+		ancient(ref = "reference_genomes/{genome}.fa")
 	output:
 		amb = "reference_genomes/{genome}.fa.amb"
 	params:
@@ -194,7 +194,7 @@ rule bwa_indexing:
 
 rule chunk_reference:
 	input:
-		fai = "reference_genomes/{genome}.fa.fai"
+		ancient(fai = "reference_genomes/{genome}.fa.fai")
 	output:
 		expand(
 			"reference_genomes/{{genome}}_split_chunk{num}.bed",
@@ -224,7 +224,7 @@ rule prefetch_sra:
 
 rule fastq_dump_paired:
 	input:
-		sra = os.path.join(temp_directory, "{sample}/{sample}.sra")
+		sra = ancient(os.path.join(temp_directory, "{sample}/{sample}.sra"))
 	output:
 		fq1 = "paired_fastqs/{sample}_1.fastq.gz",
 		fq2 = "paired_fastqs/{sample}_2.fastq.gz"
@@ -242,8 +242,8 @@ rule fix_read_IDs_for_paired_fastqs_from_SRA_paired:
 	# they give bwa issues.  This rule will go through and rename them so that
 	# they're compatible with bwa
 	input:
-		fq1 = "paired_fastqs/{sample}_1.fastq.gz",
-		fq2 = "paired_fastqs/{sample}_2.fastq.gz"
+		fq1 = ancient("paired_fastqs/{sample}_1.fastq.gz"),
+		fq2 = ancient("paired_fastqs/{sample}_2.fastq.gz")
 	output:
 		out1 = "renamed_fastqs/{sample}_fixed_1.fastq.gz",
 		out2 = "renamed_fastqs/{sample}_fixed_2.fastq.gz"
@@ -305,8 +305,8 @@ rule fix_read_IDs_for_paired_fastqs_from_SRA_paired:
 
 rule fastqc_analysis_sra:
 	input:
-		fq1 = lambda wildcards: read1_dict[wildcards.sample],
-		fq2 = lambda wildcards: read2_dict[wildcards.sample]
+		fq1 = ancient(lambda wildcards: read1_dict[wildcards.sample]),
+		fq2 = ancient(lambda wildcards: read2_dict[wildcards.sample])
 	output:
 		fq1 = "fastqc/{sample}_fixed_1_fastqc.html",
 		fq2 = "fastqc/{sample}_fixed_2_fastqc.html"
@@ -320,8 +320,8 @@ rule fastqc_analysis_sra:
 
 rule fastqc_analysis_new_samples:
 	input:
-		fq1 = lambda wildcards: read1_dict[wildcards.sample],
-		fq2 = lambda wildcards: read2_dict[wildcards.sample]
+		fq1 = ancient(lambda wildcards: read1_dict[wildcards.sample]),
+		fq2 = ancient(lambda wildcards: read2_dict[wildcards.sample])
 	output:
 		fq1 = "fastqc/{sample}_read1_fastqc.html",
 		fq2 = "fastqc/{sample}_read2_fastqc.html"
@@ -335,14 +335,14 @@ rule fastqc_analysis_new_samples:
 
 rule multiqc_analysis_dna:
 	input:
-		sra = expand(
+		ancient(sra = expand(
 			"fastqc/{sample}_fixed_{read}_fastqc.html",
 			sample=sra_ids,
-			read=["1", "2"]),
-		new = expand(
+			read=["1", "2"])),
+		ancient(new = expand(
 			"fastqc/{sample}_{read}_fastqc.html",
 			sample=new_samples,
-			read=["read1", "read2"])
+			read=["read1", "read2"]))
 	output:
 		"multiqc/multiqc_report.html"
 	params:
@@ -356,8 +356,8 @@ rule multiqc_analysis_dna:
 
 rule trim_adapters_paired_bbduk_dna:
 	input:
-		fq1 = lambda wildcards: read1_dict[wildcards.sample],
-		fq2 = lambda wildcards: read2_dict[wildcards.sample]
+		fq1 = ancient(lambda wildcards: read1_dict[wildcards.sample]),
+		fq2 = ancient(lambda wildcards: read2_dict[wildcards.sample])
 	output:
 		out_fq1 = "trimmed_fastqs/{sample}_trimmed_read1.fastq.gz",
 		out_fq2 = "trimmed_fastqs/{sample}_trimmed_read2.fastq.gz"
@@ -372,8 +372,8 @@ rule trim_adapters_paired_bbduk_dna:
 
 rule fastqc_analysis_trimmed:
 	input:
-		fq1 = "trimmed_fastqs/{sample}_trimmed_read1.fastq.gz",
-		fq2 = "trimmed_fastqs/{sample}_trimmed_read2.fastq.gz"
+		fq1 = ancient("trimmed_fastqs/{sample}_trimmed_read1.fastq.gz"),
+		fq2 = ancient("trimmed_fastqs/{sample}_trimmed_read2.fastq.gz")
 	output:
 		html1 = "fastqc_trimmed/{sample}_trimmed_read1_fastqc.html",
 		html2 = "fastqc_trimmed/{sample}_trimmed_read2_fastqc.html"
@@ -387,9 +387,9 @@ rule fastqc_analysis_trimmed:
 
 rule multiqc_analysis_trimmed_dna:
 	input:
-		expand(
+		ancient(expand(
 			"fastqc_trimmed/{sample}_trimmed_{reads}_fastqc.html",
-			sample=initial_sample_list, reads=["read1", "read2"])
+			sample=initial_sample_list, reads=["read1", "read2"]))
 	output:
 		"multiqc_trimmed/multiqc_report.html"
 	params:
@@ -404,12 +404,12 @@ rule multiqc_analysis_trimmed_dna:
 
 rule map_and_process_trimmed_reads:
 	input:
-		fq1 = "trimmed_fastqs/{sample}_trimmed_read1.fastq.gz",
-		fq2 = "trimmed_fastqs/{sample}_trimmed_read2.fastq.gz",
-		ref = "reference_genomes/{genome}.fa",
-		fai = "reference_genomes/{genome}.fa.fai",
-		amb = "reference_genomes/{genome}.fa.amb",
-		dict = "reference_genomes/{genome}.dict"
+		fq1 = ancient("trimmed_fastqs/{sample}_trimmed_read1.fastq.gz"),
+		fq2 = ancient("trimmed_fastqs/{sample}_trimmed_read2.fastq.gz"),
+		ref = ancient("reference_genomes/{genome}.fa"),
+		fai = ancient("reference_genomes/{genome}.fa.fai"),
+		amb = ancient("reference_genomes/{genome}.fa.amb"),
+		dict = ancient("reference_genomes/{genome}.dict")
 	output:
 		"processed_bams/{sample}.{genome}.sorted.bam"
 	params:
@@ -433,7 +433,7 @@ rule map_and_process_trimmed_reads:
 
 rule index_bam:
 	input:
-		"processed_bams/{sample}.{genome}.sorted.bam"
+		ancient("processed_bams/{sample}.{genome}.sorted.bam")
 	output:
 		"processed_bams/{sample}.{genome}.sorted.bam.bai"
 	params:
@@ -446,12 +446,12 @@ rule index_bam:
 
 rule merge_bams:
 	input:
-		bams = lambda wildcards: expand(
+		bams = ancient(lambda wildcards: expand(
 			"processed_bams/{sample}.{genome}.sorted.bam",
-			sample=config["to_merge"][wildcards.sample], genome=wildcards.genome),
-		bais = lambda wildcards: expand(
+			sample=config["to_merge"][wildcards.sample], genome=wildcards.genome)),
+		bais = ancient(lambda wildcards: expand(
 			"processed_bams/{sample}.{genome}.sorted.bam.bai",
-			sample=config["to_merge"][wildcards.sample], genome=wildcards.genome)
+			sample=config["to_merge"][wildcards.sample], genome=wildcards.genome))
 	output:
 		"processed_bams/{sample}.{genome}.sorted.merged.bam"
 	params:
@@ -472,7 +472,7 @@ rule merge_bams:
 
 rule index_merged_bam:
 	input:
-		"processed_bams/{sample}.{genome}.sorted.merged.bam"
+		ancient("processed_bams/{sample}.{genome}.sorted.merged.bam")
 	output:
 		"processed_bams/{sample}.{genome}.sorted.merged.bam.bai"
 	params:
@@ -485,8 +485,8 @@ rule index_merged_bam:
 
 rule picard_mkdups:
 	input:
-		bam = "processed_bams/{sample}.{genome}.sorted.merged.bam",
-		bai = "processed_bams/{sample}.{genome}.sorted.merged.bam.bai"
+		bam = ancient("processed_bams/{sample}.{genome}.sorted.merged.bam"),
+		bai = ancient("processed_bams/{sample}.{genome}.sorted.merged.bam.bai")
 	output:
 		bam = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam",
 		metrics = "metrics/{sample}.{genome}.picard_mkdup_metrics.txt"
@@ -502,7 +502,7 @@ rule picard_mkdups:
 
 rule index_mkdup_bam:
 	input:
-		"processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam"
+		ancient("processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam")
 	output:
 		"processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam.bai"
 	params:
@@ -515,8 +515,8 @@ rule index_mkdup_bam:
 
 rule bam_stats:
 	input:
-		bam = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam",
-		bai = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam.bai"
+		bam = ancient("processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam"),
+		bai = ancient("processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam.bai")
 	output:
 		"stats/{sample}.{genome}.sorted.mkdup.bam.stats"
 	params:
@@ -529,7 +529,7 @@ rule bam_stats:
 
 rule plot_bamMQs:
 	input:
-		bam = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam"
+		bam = ancient("processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam")
 	output:
 		png = "stats/{sample}.{genome}.bamMQ_Dist.png"
 	params:
@@ -543,11 +543,11 @@ rule plot_bamMQs:
 # Call and filter variants
 rule gatk_gvcf_per_chunk:
 	input:
-		ref = "reference_genomes/{genome}.fa",
-		dict = "reference_genomes/{genome}.dict",
-		bam = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam",
-		bai = "processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam.bai",
-		chunkfile = "reference_genomes/{genome}_split_chunk{chunk}.bed"
+		ref = ancient("reference_genomes/{genome}.fa"),
+		dict = ancient("reference_genomes/{genome}.dict"),
+		bam = ancient("processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam"),
+		bai = ancient("processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam.bai"),
+		chunkfile = ancient("reference_genomes/{genome}_split_chunk{chunk}.bed")
 	output:
 		"gvcf/{sample}.{genome}.{chunk}.g.vcf.gz"
 	benchmark:
@@ -565,13 +565,13 @@ rule gatk_gvcf_per_chunk:
 
 rule genomicsdbimport_combine_gvcfs_per_chunk:
 	input:
-		ref = "reference_genomes/{genome}.fa",
-		gvcfs = lambda wildcards: expand(
+		ref = ancient("reference_genomes/{genome}.fa"),
+		gvcfs = ancient(lambda wildcards: expand(
 			"gvcf/{sample}.{genome}.{chunk}.g.vcf.gz",
 			sample=QCpassed_sample_list,
 			genome=[wildcards.genome],
-			chunk=[wildcards.chunk]),
-		chunkfile = "reference_genomes/{genome}_split_chunk{chunk}.bed"
+			chunk=[wildcards.chunk])),
+		ancient(chunkfile = "reference_genomes/{genome}_split_chunk{chunk}.bed")
 	output:
 		directory("gvcf_databases/{genome}-{chunk}")
 	benchmark:
@@ -594,8 +594,8 @@ rule genomicsdbimport_combine_gvcfs_per_chunk:
 
 rule gatk_genotypegvcf_genomicsdb:
 	input:
-		gvcf = "gvcf_databases/{genome}-{chunk}",
-		ref = "reference_genomes/{genome}.fa"
+		gvcf = ancient("gvcf_databases/{genome}-{chunk}"),
+		ref = ancient("reference_genomes/{genome}.fa")
 	output:
 		"vcf_genotyped/{genome}.{chunk}.gatk.called.raw.vcf.gz"
 	benchmark:
@@ -612,10 +612,10 @@ rule gatk_genotypegvcf_genomicsdb:
 
 rule concatenate_split_vcfs:
 	input:
-		vcf = lambda wildcards: expand(
+		vcf = ancient(lambda wildcards: expand(
 			"vcf_genotyped/{genome}.{chunk}.gatk.called.raw.vcf.gz",
 			genome=wildcards.genome,
-			chunk=chunk_range2)
+			chunk=chunk_range2))
 	output:
 		"combined_vcfs/combined.{genome}.raw.vcf.gz"
 	benchmark:
@@ -630,7 +630,7 @@ rule concatenate_split_vcfs:
 
 rule index_concatenated_vcf:
 	input:
-		"combined_vcfs/combined.{genome}.raw.vcf.gz"
+		ancient("combined_vcfs/combined.{genome}.raw.vcf.gz")
 	output:
 		"combined_vcfs/combined.{genome}.raw.vcf.gz.tbi"
 	benchmark:
@@ -699,7 +699,7 @@ rule vcf_stats:
 
 rule mosdepth_depth:
 	input:
-		"processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam"
+		ancient("processed_bams/{sample}.{genome}.sorted.merged.mkdup.bam")
 	output:
 		dist = "mosdepth_results/{sample}.{genome}.total.mosdepth.global.dist.txt",
 		per_base = "mosdepth_results/{sample}.{genome}.total.per-base.bed.gz"
@@ -714,7 +714,7 @@ rule mosdepth_depth:
 
 rule filter_mosdepth:
 	input:
-		"mosdepth_results/{sample}.{genome}.total.per-base.bed.gz"
+		ancient("mosdepth_results/{sample}.{genome}.total.per-base.bed.gz")
 	output:
 		"mosdepth_results/{sample}.{genome}.total.per-base.dp{dp}.merged.bed"
 	params:
