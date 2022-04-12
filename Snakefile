@@ -86,20 +86,20 @@ filter_mapqs = ["30"]
 
 rule all:
 	input:
-		"multiqc/multiqc_report.html",
-		"multiqc_trimmed/multiqc_report.html",
-		expand(
-			"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
-			sample=processed_sample_list, genome=mapping_genomes),
+		#"multiqc/multiqc_report.html",
+		#"multiqc_trimmed/multiqc_report.html",
+		#expand(
+		#	"stats/{sample}.{genome}.sorted.mkdup.bam.stats",
+		#	sample=processed_sample_list, genome=mapping_genomes),
 		expand(
 			"stats/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.stats",
 			genome=mapping_genomes, mq=filter_mapqs, dp=filter_depths),
-		expand(
-			"mosdepth_results/{sample}.{genome}.total.per-base.dp{dp}.merged.bed",
-			sample=QCpassed_sample_list, genome=mapping_genomes, dp=filter_depths),
-		expand(
-			"stats/{sample}.{genome}.bamMQ_Dist.png",
-			sample=processed_sample_list, genome=mapping_genomes),
+		#expand(
+		#	"mosdepth_results/{sample}.{genome}.total.per-base.dp{dp}.merged.bed",
+		#	sample=QCpassed_sample_list, genome=mapping_genomes, dp=filter_depths),
+		#expand(
+		#	"stats/{sample}.{genome}.bamMQ_Dist.png",
+		#	sample=processed_sample_list, genome=mapping_genomes),
 
 rule get_annotation:
 	output:
