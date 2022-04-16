@@ -646,8 +646,7 @@ rule index_concatenated_vcf:
 
 rule filter_vcfs:
 	input:
-		vcf = "combined_vcfs/combined.{genome}.raw.vcf.gz",
-		idx = "combined_vcfs/combined.{genome}.raw.vcf.gz.tbi"
+		vcf = "combined_vcfs/combined.{genome}.raw.vcf.gz"
 	output:
 		"vcf_filtered/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.gz"
 	benchmark:
