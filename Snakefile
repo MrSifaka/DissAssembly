@@ -101,21 +101,21 @@ rule all:
 		#	"stats/{sample}.{genome}.bamMQ_Dist.png",
 		#	sample=processed_sample_list, genome=mapping_genomes),
 
-rule get_annotation:
-	output:
-		"reference_genomes/{genome}.gff"
-	params:
-		web_address = lambda wildcards: config["annotation_address"][wildcards.genome],
-		initial_output = "reference_genomes/{genome}.gff.gz",
-		threads = 1,
-		mem = 4,
-		t = day
-	run:
-		shell("wget {params.web_address} -O {params.initial_output}")
-		shell("gunzip {params.initial_output}")
+#rule get_annotation:
+#	output:
+#		"reference_genomes/{genome}.gff"
+#	params:
+#		web_address = lambda wildcards: config["annotation_address"][wildcards.genome],
+#		initial_output = "reference_genomes/{genome}.gff.gz",
+#		threads = 1,
+#		mem = 4,
+#		t = day
+#	run:
+#		shell("wget {params.web_address} -O {params.initial_output}")
+#		shell("gunzip {params.initial_output}")
 
-rule extract_cds_from_gff:
-	input:
+#rule extract_cds_from_gff:
+#	input:
 		"reference_genomes/{genome}.gff"
 	output:
 		"regions/{genome}.cds.gff"
@@ -646,7 +646,8 @@ rule index_concatenated_vcf:
 
 rule filter_vcfs:
 	input:
-		vcf = "combined_vcfs/combined.{genome}.raw.vcf.gz"
+		vcf = "combined_vcfs/combined.{genome}.raw.vcf.gz",
+		tbi = "combined_vcfs/combined.{genome}.raw.vcf.gz.tbi"
 	output:
 		"vcf_filtered/{genome}.gatk.called.filtered_mq{mq}_dp{dp}.vcf.gz"
 	benchmark:
